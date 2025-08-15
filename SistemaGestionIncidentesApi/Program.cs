@@ -1,3 +1,6 @@
+using SistemaGestionIncidentesApi.Data;
+using SistemaGestionIncidentesApi.Data.Contrato;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//INYECTAR DEPENDENCIAS
+builder.Services.AddScoped<IUsuario, UsuarioRepositorio>();
+builder.Services.AddScoped<IIndicente, IncidenteRepositorio>();
 
 var app = builder.Build();
 

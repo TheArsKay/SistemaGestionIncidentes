@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/login.css" />
+
+<div class="login-background">
+    <div class="login-card">
+        <h2>Iniciar Sesión</h2>
+
+        <form asp-action="Login" method="post">
+            <div class="mb-3">
+                <label class="form-label">Correo electrónico</label>
+                <input type="email" class="form-control" name="email" placeholder="Ej: usuario@correo.com" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <input type="password" class="form-control" name="clave" placeholder="••••••••" required />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Iniciar sesión</button>
+        </form>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger mt-3 text-center">@ViewBag.Error</div>
+        }
+
+        <div class="mt-3 text-center">
+            <span>¿No tienes cuenta?</span>
+            <a asp-controller="Usuarios" asp-action="Register" class="text-primary fw-bold">Regístrate aquí</a>
+        </div>
+    </div>
+</div>
+
+
