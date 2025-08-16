@@ -1,0 +1,92 @@
+﻿@{
+    // Leer usuario y rol desde Session
+    var usuario = Context.Session.GetString("UsuarioNombre") ?? "Usuario";
+    var rol = Context.Session.GetString("UsuarioRol") ?? "Rol";
+
+    // Menú según rol
+    var opciones = new List<(string Texto, string Controller, string Action)>();
+
+    // Siempre la opción de Inicio primero
+    opciones.Add(("Inicio", "Dashboard", "Index"));
+
+    if (rol == "Operador")
+    {
+        opciones.Add(("Listado de Incidentes", "Incidentes", "Index"));
+        opciones.Add(("Registrar Incidente", "Incidentes", "Create"));
+    }
+    else if (rol == "Supervisor")
+    {
+        opciones.Add(("Mantener Incidente", "Incidentes", "Edit"));
+        opciones.Add(("Reportes", "Incidente", "Reportes"));
+    }
+    else if (rol == "Técnico")
+    {
+        opciones.Add(("Mis Incidentes", "Incidentes", "MisIncidentes"));
+    }
+
+
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Dashboard</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/dashboard.css" />
+
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <div class="dashboard-layout d-flex">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <span class="logo">Sistema de Incidentes</span>
+                <button class="btn btn-sm btn-toggle" id="toggleMenu">☰</button>
+            </div>
+            <ul class="sidebar-menu list-unstyled mt-3">
+                @foreach (var opcion in opciones)
+                {
+                    <li>
+                        <a asp-controller="@opcion.Controller" asp-action="@opcion.Action">
+                            @opcion.Texto
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+
+        <!-- Main -->
+        <div class="main flex-grow-1">
+            <!-- Top bar -->
+            <header class="topbar d-flex justify-content-between align-items-center p-2 border-bottom">
+                <h4 class="mb-0">@ViewData["Title"]</h4>
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        👤 @usuario (@rol)
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" asp-controller="Usuarios" asp-action="Logout">Cerrar sesión</a></li>
+                    </ul>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="p-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("toggleMenu").addEventListener("click", function () {
+            document.querySelector(".sidebar").classList.toggle("collapsed");
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

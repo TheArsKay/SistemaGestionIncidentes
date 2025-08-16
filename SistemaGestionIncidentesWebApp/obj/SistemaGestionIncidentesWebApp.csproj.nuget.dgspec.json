@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Yheremy Menacho\\OneDrive\\Documentos\\SISTEMAGESTION_INCIDENTES_API\\SISTEMAGESTION_INCIDENTES_API\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj": {}
+    "C:\\Users\\Yheremy Menacho\\Source\\Repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Yheremy Menacho\\OneDrive\\Documentos\\SISTEMAGESTION_INCIDENTES_API\\SISTEMAGESTION_INCIDENTES_API\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj": {
+    "C:\\Users\\Yheremy Menacho\\Source\\Repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Yheremy Menacho\\OneDrive\\Documentos\\SISTEMAGESTION_INCIDENTES_API\\SISTEMAGESTION_INCIDENTES_API\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
+        "projectUniqueName": "C:\\Users\\Yheremy Menacho\\Source\\Repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
         "projectName": "SistemaGestionIncidentesWebApp",
-        "projectPath": "C:\\Users\\Yheremy Menacho\\OneDrive\\Documentos\\SISTEMAGESTION_INCIDENTES_API\\SISTEMAGESTION_INCIDENTES_API\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
+        "projectPath": "C:\\Users\\Yheremy Menacho\\Source\\Repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
         "packagesPath": "C:\\Users\\Yheremy Menacho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Yheremy Menacho\\OneDrive\\Documentos\\SISTEMAGESTION_INCIDENTES_API\\SISTEMAGESTION_INCIDENTES_API\\SistemaGestionIncidentesWebApp\\obj\\",
+        "outputPath": "C:\\Users\\Yheremy Menacho\\Source\\Repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -49,6 +49,28 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.Data.SqlClient": {
+              "target": "Package",
+              "version": "[6.1.1, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.9.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

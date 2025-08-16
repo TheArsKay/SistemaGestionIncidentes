@@ -1,0 +1,146 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = "Gestión de Categorías";
+}
+
+<h2>Gestión de Categorías</h2>
+
+<button class="btn btn-primary mb-3" id="btnNuevo">Nueva Categoría</button>
+
+<table id="tablaCategorias" class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="modalCategoria" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Categoría</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="categoriaId">
+                <div class="mb-3">
+                    <label>Nombre</label>
+                    <input type="text" id="nombreCategoria" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardar">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        let tabla;
+
+        $(document).ready(function () {
+            cargarTabla();
+
+            $("#btnNuevo").click(function () {
+                limpiarFormulario();
+                $("#modalCategoria").modal("show");
+            });
+
+            $("#btnGuardar").click(function () {
+                let categoria = {
+                    Id: parseInt($("#categoriaId").val()) || 0,
+                    NombreCategoria: $("#nombreCategoria").val(),
+                    Estado: "A"
+                };
+
+                let url = categoria.Id > 0 ? "/Categoria/EditarJson" : "/Categoria/CrearJson";
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(categoria),
+                    success: function () {
+                        $("#modalCategoria").modal("hide");
+                        limpiarFormulario();
+                        cargarTabla();
+                    },
+                    error: function (xhr) {
+                        alert("Error: " + xhr.responseText);
+                    }
+                });
+            });
+        });
+
+        function cargarTabla() {
+            $.get("/Categoria/Listar", function (data) {
+                if ($.fn.DataTable.isDataTable("#tablaCategorias")) {
+                    tabla.destroy();
+                }
+                $("#tablaCategorias tbody").empty();
+                tabla = $("#tablaCategorias").DataTable({
+                    data: data,
+                    columns: [
+                        { data: "id" },
+                        { data: "nombreCategoria" },
+                        { data: "estado" },
+                        {
+                            data: null,
+                            render: function (row) {
+                                return `
+                                    <button class='btn btn-warning btn-sm' onclick='editar(${row.id}, "${row.nombreCategoria}")'>Editar</button>
+                                    <button class='btn btn-danger btn-sm' onclick='eliminar(${row.id})'>Eliminar</button>
+                                `;
+                            }
+                        }
+                    ]
+                });
+            }).fail(function(xhr){
+                alert("Error al cargar categorías: " + xhr.responseText);
+            });
+        }
+
+        function editar(id, nombre) {
+            $("#categoriaId").val(id);
+            $("#nombreCategoria").val(nombre);
+            $("#modalCategoria").modal("show");
+        }
+
+        function eliminar(id) {
+            if (confirm("¿Seguro que quieres eliminar esta categoría?")) {
+                $.ajax({
+                    url: "/Categoria/EliminarJson",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ Id: id }),
+                    success: function () {
+                        cargarTabla();
+                    },
+                    error: function (xhr) {
+                        alert("Error: " + xhr.responseText);
+                    }
+                });
+            }
+        }
+
+        function limpiarFormulario() {
+            $("#categoriaId").val("");
+            $("#nombreCategoria").val("");
+        }
+    </script>
+}

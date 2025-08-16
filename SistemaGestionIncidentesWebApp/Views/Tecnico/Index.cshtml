@@ -1,0 +1,164 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = "Gestión de Técnicos";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/inicio.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+}
+
+<div class="container-fluid mt-4">
+    <h2 class="mb-4 fw-bold text-dark">Gestión de Técnicos</h2>
+
+    <button class="btn btn-primary mb-3" id="btnNuevo">Nuevo Técnico</button>
+
+    <table id="tablaTecnicos" class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalTecnico" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Técnico</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="tecnicoId">
+                <div class="mb-3">
+                    <label>Nombre</label>
+                    <input type="text" id="nombre" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" id="email" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>Clave</label>
+                    <input type="password" id="clave" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardar">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        let tabla;
+
+        $(document).ready(function () {
+            cargarTabla();
+
+            $("#btnNuevo").click(function () {
+                limpiarFormulario();
+                $("#modalTecnico").modal("show");
+            });
+
+            $("#btnGuardar").click(function () {
+                let tecnico = {
+                    Id: parseInt($("#tecnicoId").val()) || 0,
+                    Nombre: $("#nombre").val(),
+                    Email: $("#email").val(),
+                    Clave: $("#clave").val(),
+                    RolId: 4 // Técnico
+                };
+
+                let url = tecnico.Id > 0 ? "/Tecnico/Editar" : "/Tecnico/Crear";
+
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(tecnico),
+                    success: function () {
+                        $("#modalTecnico").modal("hide");
+                        limpiarFormulario();
+                        cargarTabla();
+                    },
+                    error: function (xhr) {
+                        alert("Error: " + xhr.responseText);
+                    }
+                });
+            });
+        });
+
+        function cargarTabla() {
+            $.get("/Tecnico/Listar", function (data) {
+                if ($.fn.DataTable.isDataTable("#tablaTecnicos")) {
+                    tabla.destroy();
+                }
+                $("#tablaTecnicos tbody").empty();
+                tabla = $("#tablaTecnicos").DataTable({
+                    data: data,
+                    columns: [
+                        { data: "id" },
+                        { data: "nombre" },
+                        { data: "email" },
+                        { data: "nombreRol" },
+                        {
+                            data: null,
+                            render: function (row) {
+                                return `
+                                    <button class='btn btn-warning btn-sm' onclick='editar(${row.id}, "${row.nombre}", "${row.email}")'>Editar</button>
+                                    <button class='btn btn-danger btn-sm' onclick='eliminar(${row.id})'>Eliminar</button>
+                                `;
+                            }
+                        }
+                    ]
+                });
+            }).fail(function(xhr){
+                alert("Error al cargar técnicos: " + xhr.responseText);
+            });
+        }
+
+        function editar(id, nombre, email) {
+            $("#tecnicoId").val(id);
+            $("#nombre").val(nombre);
+            $("#email").val(email);
+            $("#modalTecnico").modal("show");
+        }
+
+        function eliminar(id) {
+            if (confirm("¿Seguro que quieres eliminar este técnico?")) {
+                $.ajax({
+                    url: "/Tecnico/Eliminar",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({ Id: id }),
+                    success: function () {
+                        cargarTabla();
+                    },
+                    error: function (xhr) {
+                        alert("Error: " + xhr.responseText);
+                    }
+                });
+            }
+        }
+
+        function limpiarFormulario() {
+            $("#tecnicoId").val("");
+            $("#nombre").val("");
+            $("#email").val("");
+            $("#clave").val("");
+        }
+    </script>
+}
