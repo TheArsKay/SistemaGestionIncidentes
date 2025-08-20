@@ -1,37 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\SISTEMAGESTION_INCIDENTES_API\\SistemaGestionIncidentesApi\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{EFCFB886-3989-41A5-8BC0-6843FA9F41D6}|SistemaGestionIncidentesApi.csproj|d:\\5_ciclo_julio\\desarrollo de servicios web i\\sistemagestion_incidentes_api\\sistemagestionincidentesapi\\sistemagestionincidentesapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{EFCFB886-3989-41A5-8BC0-6843FA9F41D6}|SistemaGestionIncidentesApi.csproj|solutionrelative:sistemagestionincidentesapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    }
-  ],
+  "WorkspaceRootPath": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\",
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SistemaGestionIncidentesApi",
-              "DocumentMoniker": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\SISTEMAGESTION_INCIDENTES_API\\SistemaGestionIncidentesApi\\SistemaGestionIncidentesApi.csproj",
-              "RelativeDocumentMoniker": "SistemaGestionIncidentesApi.csproj",
-              "ToolTip": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\SISTEMAGESTION_INCIDENTES_API\\SistemaGestionIncidentesApi\\SistemaGestionIncidentesApi.csproj",
-              "RelativeToolTip": "SistemaGestionIncidentesApi.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-08-12T01:58:05.167Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

@@ -1,0 +1,45 @@
+﻿@model SistemaGestionIncidentesWebApp.Models.Usuario
+@{
+    Layout = null;
+    ViewData["Title"] = "Registro de Usuario";
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/register.css" />
+
+<div class="register-background">
+    <div class="register-card">
+        <h2 class="text-center">Crear Cuenta</h2>
+
+        <form asp-action="Register" method="post">
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input asp-for="Nombre" class="form-control" placeholder="Ingresa tu nombre" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Correo electrónico</label>
+                <input asp-for="Email" type="email" class="form-control" placeholder="Ej: usuario@correo.com" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <input asp-for="Clave" type="password" class="form-control" placeholder="••••••••" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Rol</label>
+                <select asp-for="RolId" class="form-control" asp-items="ViewBag.Roles" required>
+                    <option value="">-- Selecciona un rol --</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Registrarse</button>
+        </form>
+
+        <div class="mt-3 text-center">
+            <span>¿Ya tienes cuenta?</span>
+            <a asp-controller="Usuarios" asp-action="Login" class="text-primary fw-bold">Inicia sesión aquí</a>
+        </div>
+    </div>
+</div>
