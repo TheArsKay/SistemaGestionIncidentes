@@ -1,0 +1,36 @@
+﻿/* Fondo degradado */
+.login-background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+/* Tarjeta de login */
+.login-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+    /* Título */
+    .login-card h2 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #3b82f6;
+        font-weight: bold;
+    }
+
+    /* Campos de formulario */
+    .login-card .form-control {
+        border-radius: 8px;
+    }
+
+    /* Botón */
+    .login-card button {
+        border-radius: 8px;
+    }

@@ -3,18 +3,26 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SistemaGestionIncidentesApi.Data.Contrato;
 using SistemaGestionIncidentesApi.Models;
+using SistemaGestionIncidentesWebApp.Models;
 
 namespace FinancieraAPI.Controllers
 {
     // api/Incidente
-    [Route("api/[controller]")]
+    [Route("api/incidentes")]
     [ApiController]
-    public class ClientesController : ControllerBase
+    public class IncidenteController : ControllerBase
     {
         private readonly Iincidente incidenteDB;
-        public ClientesController(Iincidente clienteRepo)
+        public IncidenteController(Iincidente incidenteRepo)
         {
-            incidenteDB = clienteRepo;
+            incidenteDB = incidenteRepo;
+        }
+
+        [HttpGet("listarResumen")]
+        public ActionResult<IEnumerable<IncidenteListado>> ListarResumen()
+        {
+            var datos = incidenteDB.ListarIncidentes();
+            return Ok(datos);
         }
 
         [HttpGet]
@@ -31,9 +39,22 @@ namespace FinancieraAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Registrar(Incidente cliente)
+        public async Task<IActionResult> Registrar(Incidente incidente)
         {
-            return Ok(await Task.Run(() => incidenteDB.Registrar(cliente)));
+            return Ok(await Task.Run(() => incidenteDB.Registrar(incidente)));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Actualizar(Incidente incidente)
+        {
+            return Ok(await Task.Run(() => incidenteDB.Actualizar(incidente)));
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Eliminar(int id)
+        {
+            return Ok(await Task.Run(() => incidenteDB.Eliminar(id)));
         }
     }
 }

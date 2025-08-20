@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\5_CICLO_JULIO\\DESARROLLO DE APLICACIONES WEB I\\proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj": {}
+    "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj": {}
   },
   "projects": {
-    "D:\\5_CICLO_JULIO\\DESARROLLO DE APLICACIONES WEB I\\proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj": {
+    "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\5_CICLO_JULIO\\DESARROLLO DE APLICACIONES WEB I\\proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
+        "projectUniqueName": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
         "projectName": "SistemaGestionIncidentesWebApp",
-        "projectPath": "D:\\5_CICLO_JULIO\\DESARROLLO DE APLICACIONES WEB I\\proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
+        "projectPath": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "D:\\5_CICLO_JULIO\\DESARROLLO DE APLICACIONES WEB I\\proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\obj\\",
+        "outputPath": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -49,6 +49,16 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

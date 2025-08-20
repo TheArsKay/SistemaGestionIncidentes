@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = "Panel de Incidencias";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/inicio.css" />
+}
+
+<div class="container-fluid mt-4">
+    <h2 class="mb-4 fw-bold text-dark">📊 Resumen de Incidencias</h2>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card card-dashboard bg-warning shadow-sm">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon me-3">
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-1">Pendientes</h5>
+                        <h2 class="fw-bold">@ViewBag.Pendientes</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card card-dashboard bg-primary text-white shadow-sm">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon me-3">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-1">En Proceso</h5>
+                        <h2 class="fw-bold">@ViewBag.EnProceso</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card card-dashboard bg-success text-white shadow-sm">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon me-3">
+                        <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-1">Cerrados</h5>
+                        <h2 class="fw-bold">@ViewBag.Cerrados</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
