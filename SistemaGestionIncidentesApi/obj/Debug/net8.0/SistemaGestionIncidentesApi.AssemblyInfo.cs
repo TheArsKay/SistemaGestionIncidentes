@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SistemaGestionIncidentesApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+85701ee662e4b8ccfaf62cdb8b7d9ca431be7f4e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7d58b594339eddec4115f8e60f9b723939316317")]
 [assembly: System.Reflection.AssemblyProductAttribute("SistemaGestionIncidentesApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SistemaGestionIncidentesApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

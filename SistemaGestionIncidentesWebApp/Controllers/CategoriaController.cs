@@ -1,109 +1,90 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using System.Text.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using SistemaGestionIncidentesWebApp.Models;
-using System.Data;
 
 namespace SistemaGestionIncidentesWebApp.Controllers
 {
     public class CategoriaController : Controller
     {
-        private readonly IConfiguration _configuration;
-
-        public CategoriaController(IConfiguration configuration)
+        private readonly IHttpClientFactory _httpFactory;
+        public CategoriaController(IHttpClientFactory httpFactory)
         {
-            _configuration = configuration;
+            _httpFactory = httpFactory;
         }
 
-        // 📌 Página principal
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            var client = _httpFactory.CreateClient("Api");
+            var resp = await client.GetAsync("categoria/listar");
+            if (!resp.IsSuccessStatusCode) return View(new List<Categoria>());
+
+            var json = await resp.Content.ReadAsStringAsync();
+            var lista = JsonSerializer.Deserialize<List<Categoria>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return View(lista);
+        }
+
+        public async Task<IActionResult> Crear()
         {
             return View();
         }
 
-        // 📌 Listar categorías en JSON
-        [HttpGet]
-        public IActionResult Listar()
+        [HttpPost]
+        public async Task<IActionResult> Crear(Categoria model)
         {
-            List<Categoria> categorias = new List<Categoria>();
+            if (!ModelState.IsValid) return View(model);
 
-            using (SqlConnection cn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            var client = _httpFactory.CreateClient("Api");
+            var content = new StringContent(JsonSerializer.Serialize(model), System.Text.Encoding.UTF8, "application/json");
+            var resp = await client.PostAsync("categoria/registrar", content);
+
+            if (!resp.IsSuccessStatusCode)
             {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand("ListarCategorias", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                SqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    categorias.Add(new Categoria
-                    {
-                        Id = Convert.ToInt32(dr["id"]),
-                        NombreCategoria = dr["nombre_categoria"].ToString(),
-                        Estado = dr["estado"].ToString()
-                    });
-                }
+                ModelState.AddModelError("", "Error al registrar categoría");
+                return View(model);
             }
 
-            return Json(categorias);
+            return RedirectToAction("Index");
         }
 
-        // 📌 Crear categoría
-        [HttpPost]
-        public IActionResult CrearJson([FromBody] Categoria categoria)
+        public async Task<IActionResult> Editar(int id)
         {
-            if (categoria == null || string.IsNullOrWhiteSpace(categoria.NombreCategoria))
-                return BadRequest("El nombre de la categoría es obligatorio");
+            var client = _httpFactory.CreateClient("Api");
+            var resp = await client.GetAsync($"categoria/{id}");
+            if (!resp.IsSuccessStatusCode) return NotFound();
 
-            using (SqlConnection cn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-            {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand("RegistrarCategoria", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@nombre_categoria", categoria.NombreCategoria);
-                cmd.ExecuteNonQuery();
-            }
-
-            return Json(new { success = true });
+            var json = await resp.Content.ReadAsStringAsync();
+            var model = JsonSerializer.Deserialize<Categoria>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return View(model);
         }
 
-        // 📌 Editar categoría
         [HttpPost]
-        public IActionResult EditarJson([FromBody] Categoria categoria)
+        public async Task<IActionResult> Editar(int id, Categoria model)
         {
-            if (categoria == null || categoria.Id <= 0 || string.IsNullOrWhiteSpace(categoria.NombreCategoria))
-                return BadRequest("Datos inválidos");
+            if (!ModelState.IsValid) return View(model);
 
-            using (SqlConnection cn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            var client = _httpFactory.CreateClient("Api");
+            var content = new StringContent(JsonSerializer.Serialize(model), System.Text.Encoding.UTF8, "application/json");
+            var resp = await client.PutAsync($"categoria/actualizar/{id}", content);
+
+            if (!resp.IsSuccessStatusCode)
             {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand("ActualizarCategoria", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", categoria.Id);
-                cmd.Parameters.AddWithValue("@nombre_categoria", categoria.NombreCategoria);
-                cmd.Parameters.AddWithValue("@estado", categoria.Estado ?? "A");
-                cmd.ExecuteNonQuery();
+                ModelState.AddModelError("", "Error al actualizar categoría");
+                return View(model);
             }
 
-            return Json(new { success = true });
+            return RedirectToAction("Index");
         }
 
-        // 📌 Eliminar categoría (baja lógica)
         [HttpPost]
-        public IActionResult EliminarJson([FromBody] Categoria categoria)
+        public async Task<IActionResult> Eliminar(int id)
         {
-            if (categoria == null || categoria.Id <= 0)
-                return BadRequest("Id inválido");
-
-            using (SqlConnection cn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-            {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand("EliminarCategoria", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", categoria.Id);
-                cmd.ExecuteNonQuery();
-            }
-
-            return Json(new { success = true });
+            var client = _httpFactory.CreateClient("Api");
+            var resp = await client.DeleteAsync($"categoria/eliminar/{id}");
+            // Opcional: comprobar status
+            return RedirectToAction("Index");
         }
     }
 }

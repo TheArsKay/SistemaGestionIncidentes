@@ -63,6 +63,7 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
     <script>
+        const apiBaseUrl = "https://localhost:7162/api";
         let tabla;
 
         $(document).ready(function () {
@@ -74,19 +75,22 @@
             });
 
             $("#btnGuardar").click(function () {
-                let tecnico = {
-                    Id: parseInt($("#tecnicoId").val()) || 0,
-                    Nombre: $("#nombre").val(),
-                    Email: $("#email").val(),
-                    Clave: $("#clave").val(),
-                    RolId: 4 // Técnico
-                };
+                        let tecnico = {
+            Id: parseInt($("#tecnicoId").val()) || 0,
+            Nombre: $("#nombre").val(),
+            Correo: $("#email").val(),
+            Clave: $("#clave").val(),
+            Estado: "A",   // <--- Aquí agregamos el estado
+            RolId: 4
+        };
 
-                let url = tecnico.Id > 0 ? "/Tecnico/Editar" : "/Tecnico/Crear";
+
+                let url = tecnico.Id > 0 ? `${apiBaseUrl}/Tecnico/actualizar/${tecnico.Id}` : `${apiBaseUrl}/Tecnico/registrar`;
+                let type = tecnico.Id > 0 ? "PUT" : "POST";
 
                 $.ajax({
                     url: url,
-                    type: "POST",
+                    type: type,
                     contentType: "application/json",
                     data: JSON.stringify(tecnico),
                     success: function () {
@@ -94,61 +98,74 @@
                         limpiarFormulario();
                         cargarTabla();
                     },
-                    error: function (xhr) {
-                        alert("Error: " + xhr.responseText);
+                    error: function (xhr, status, error) {
+                        console.error("XHR:", xhr);
+                        console.error("Status:", status);
+                        console.error("Error:", error);
+                        alert("Error: " + error);
                     }
                 });
             });
         });
 
         function cargarTabla() {
-            $.get("/Tecnico/Listar", function (data) {
+            $.get(`${apiBaseUrl}/Tecnico/listar`, function (data) {
                 if ($.fn.DataTable.isDataTable("#tablaTecnicos")) {
                     tabla.destroy();
                 }
                 $("#tablaTecnicos tbody").empty();
                 tabla = $("#tablaTecnicos").DataTable({
                     data: data,
-                    columns: [
-                        { data: "id" },
-                        { data: "nombre" },
-                        { data: "email" },
-                        { data: "nombreRol" },
-                        {
-                            data: null,
-                            render: function (row) {
-                                return `
-                                    <button class='btn btn-warning btn-sm' onclick='editar(${row.id}, "${row.nombre}", "${row.email}")'>Editar</button>
-                                    <button class='btn btn-danger btn-sm' onclick='eliminar(${row.id})'>Eliminar</button>
-                                `;
-                            }
-                        }
-                    ]
+                            columns: [
+            { data: "id" },
+            { data: "nombre" },
+            { data: "correo" },
+            {
+                data: "rol_id",
+                render: function(data, type, row) {
+                    return data === 4 ? "Técnico" : "Otro";
+                }
+            },
+            {
+                data: null,
+                render: function (row) {
+                    return `
+                        <button class='btn btn-warning btn-sm' onclick='editar(${row.id}, "${row.nombre}", "${row.correo}")'>Editar</button>
+                        <button class='btn btn-danger btn-sm' onclick='eliminar(${row.id})'>Eliminar</button>
+                    `;
+                }
+            }
+        ]
+
                 });
-            }).fail(function(xhr){
-                alert("Error al cargar técnicos: " + xhr.responseText);
+            }).fail(function(xhr, status, error){
+                console.error("XHR:", xhr);
+                console.error("Status:", status);
+                console.error("Error:", error);
+                alert("Error al cargar técnicos: " + error);
             });
         }
 
-        function editar(id, nombre, email) {
+        function editar(id, nombre, correo) {
             $("#tecnicoId").val(id);
             $("#nombre").val(nombre);
-            $("#email").val(email);
+            $("#email").val(correo);
             $("#modalTecnico").modal("show");
         }
 
         function eliminar(id) {
             if (confirm("¿Seguro que quieres eliminar este técnico?")) {
                 $.ajax({
-                    url: "/Tecnico/Eliminar",
-                    type: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify({ Id: id }),
+                    url: `${apiBaseUrl}/Tecnico/eliminar/${id}`,
+                    type: "DELETE",
                     success: function () {
                         cargarTabla();
                     },
-                    error: function (xhr) {
-                        alert("Error: " + xhr.responseText);
+                    error: function (xhr, status, error) {
+                        console.error("XHR:", xhr);
+                        console.error("Status:", status);
+                        console.error("Error:", error);
+                        alert("Error: " + error);
                     }
                 });
             }
@@ -162,3 +179,4 @@
         }
     </script>
 }
+

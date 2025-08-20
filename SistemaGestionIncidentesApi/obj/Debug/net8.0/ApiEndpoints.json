@@ -1,5 +1,68 @@
 [
   {
+    "ContainingType": "SistemaGestionIncidentesApi.Controllers.CategoriaController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Categoria/actualizar/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "SistemaGestionIncidentesApi.Models.Categoria",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaGestionIncidentesApi.Controllers.CategoriaController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Categoria/eliminar/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaGestionIncidentesApi.Controllers.CategoriaController",
+    "Method": "Listar",
+    "RelativePath": "api/Categoria/listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaGestionIncidentesApi.Controllers.CategoriaController",
+    "Method": "Registrar",
+    "RelativePath": "api/Categoria/registrar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "SistemaGestionIncidentesApi.Models.Categoria",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SistemaGestionIncidentesApi.Controllers.IncidentesController",
     "Method": "Listar",
     "RelativePath": "api/Incidentes/listar",
@@ -18,6 +81,69 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "SistemaGestionIncidentesApi.Controllers.TecnicoController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Tecnico/actualizar/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "model",
+        "Type": "Tecnico",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaGestionIncidentesApi.Controllers.TecnicoController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Tecnico/eliminar/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaGestionIncidentesApi.Controllers.TecnicoController",
+    "Method": "Listar",
+    "RelativePath": "api/Tecnico/listar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SistemaGestionIncidentesApi.Controllers.TecnicoController",
+    "Method": "Registrar",
+    "RelativePath": "api/Tecnico/registrar",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Tecnico",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "SistemaGestionIncidentesApi.Controllers.UsuariosController",

@@ -5,13 +5,19 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSession();
 
+// HttpClient para consumir la API
+builder.Services.AddHttpClient("Api", client =>
+{
+    // "Services:URL" debe estar en appsettings.json del WebApp (ej: "https://localhost:7162/api/")
+    client.BaseAddress = new Uri(builder.Configuration["Services:URL"]);
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// rest of your existing setup...
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

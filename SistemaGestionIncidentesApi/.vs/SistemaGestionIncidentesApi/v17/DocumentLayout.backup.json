@@ -3,19 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Yheremy Menacho\\source\\repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Views\\Categoria\\Index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{513468E6-EA9E-40FF-8FBD-613A9AE28B5A}|..\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj|c:\\users\\yheremy menacho\\source\\repos\\sistemagestionincidentes\\sistemagestionincidenteswebapp\\views\\categoria\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Controllers\\CategoriaController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Models\\Categoria.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Models\\Usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{513468E6-EA9E-40FF-8FBD-613A9AE28B5A}|..\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj|c:\\users\\yheremy menacho\\source\\repos\\sistemagestionincidentes\\sistemagestionincidenteswebapp\\views\\tecnico\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -25,68 +16,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Views\\Categoria\\Index.cshtml",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Views\\Categoria\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Views\\Categoria\\Index.cshtml",
-              "RelativeToolTip": "..\\..\\..\\..\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Views\\Categoria\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-16T06:17:57.714Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "CategoriaController.cs",
-              "DocumentMoniker": "C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Controllers\\CategoriaController.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Controllers\\CategoriaController.cs",
-              "ToolTip": "C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Controllers\\CategoriaController.cs",
-              "RelativeToolTip": "..\\..\\..\\..\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Controllers\\CategoriaController.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAuwG0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-15T22:45:24.327Z"
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Yheremy Menacho\\source\\repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\Views\\Tecnico\\Index.cshtml",
+              "RelativeDocumentMoniker": "..\\SistemaGestionIncidentesWebApp\\Views\\Tecnico\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Yheremy Menacho\\source\\repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\Views\\Tecnico\\Index.cshtml",
+              "RelativeToolTip": "..\\SistemaGestionIncidentesWebApp\\Views\\Tecnico\\Index.cshtml",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAUwFUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-20T04:00:53.959Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Categoria.cs",
-              "DocumentMoniker": "C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Models\\Categoria.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Models\\Categoria.cs",
-              "ToolTip": "C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Models\\Categoria.cs",
-              "RelativeToolTip": "..\\..\\..\\..\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Models\\Categoria.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-15T22:44:55.794Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Usuario.cs",
-              "DocumentMoniker": "C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Models\\Usuario.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Models\\Usuario.cs",
-              "ToolTip": "C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Models\\Usuario.cs",
-              "RelativeToolTip": "..\\..\\..\\..\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\Models\\Usuario.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-15T22:33:16.265Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\appsettings.json",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\appsettings.json",
-              "ToolTip": "C:\\Users\\Yheremy Menacho\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\appsettings.json",
-              "RelativeToolTip": "..\\..\\..\\..\\Downloads\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentes-rama-kevin\\SistemaGestionIncidentesWebApp\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-08-15T22:21:36.444Z"
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Yheremy Menacho\\source\\repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\Views\\Categoria\\Index.cshtml",
+              "RelativeDocumentMoniker": "..\\SistemaGestionIncidentesWebApp\\Views\\Categoria\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Yheremy Menacho\\source\\repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\Views\\Categoria\\Index.cshtml",
+              "RelativeToolTip": "..\\SistemaGestionIncidentesWebApp\\Views\\Categoria\\Index.cshtml",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAuwJIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-20T03:49:29.452Z",
+              "EditorCaption": ""
             }
           ]
         }

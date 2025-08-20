@@ -1,116 +1,89 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
+using System.Text.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using SistemaGestionIncidentesWebApp.Models;
-using System.Data;
 
 namespace SistemaGestionIncidentesWebApp.Controllers
 {
     public class TecnicoController : Controller
     {
-        private readonly IConfiguration _configuration;
-
-        public TecnicoController(IConfiguration configuration)
+        private readonly IHttpClientFactory _httpFactory;
+        public TecnicoController(IHttpClientFactory httpFactory)
         {
-            _configuration = configuration;
+            _httpFactory = httpFactory;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
+        {
+            var client = _httpFactory.CreateClient("Api");
+            var resp = await client.GetAsync("tecnico/listar");
+            if (!resp.IsSuccessStatusCode) return View(new List<Tecnico>());
+
+            var json = await resp.Content.ReadAsStringAsync();
+            var lista = JsonSerializer.Deserialize<List<Tecnico>>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return View(lista);
+        }
+
+        public IActionResult Crear()
         {
             return View();
         }
 
-        [HttpGet]
-        public IActionResult Listar()
+        [HttpPost]
+        public async Task<IActionResult> Crear(Tecnico model)
         {
-            List<Usuario> tecnicos = new List<Usuario>();
+            if (!ModelState.IsValid) return View(model);
 
-            using (SqlConnection cn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            var client = _httpFactory.CreateClient("Api");
+            var content = new StringContent(JsonSerializer.Serialize(model), System.Text.Encoding.UTF8, "application/json");
+            var resp = await client.PostAsync("tecnico/registrar", content);
+
+            if (!resp.IsSuccessStatusCode)
             {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand("ListarTecnicos", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                SqlDataReader dr = cmd.ExecuteReader();
-                while (dr.Read())
-                {
-                    tecnicos.Add(new Usuario
-                    {
-                        Id = Convert.ToInt32(dr["id"]),
-                        Nombre = dr["nombre"].ToString(),
-                        Email = dr["email"].ToString(),
-                        RolId = Convert.ToInt32(dr["rol_id"]),
-                        nombreRol = dr["nombreRol"].ToString()
-                    });
-                }
+                ModelState.AddModelError("", "Error al registrar técnico");
+                return View(model);
             }
 
-            return Json(tecnicos);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Editar(int id)
+        {
+            var client = _httpFactory.CreateClient("Api");
+            var resp = await client.GetAsync($"tecnico/{id}");
+            if (!resp.IsSuccessStatusCode) return NotFound();
+
+            var json = await resp.Content.ReadAsStringAsync();
+            var model = JsonSerializer.Deserialize<Tecnico>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Crear([FromBody] Usuario tecnico)
+        public async Task<IActionResult> Editar(int id, Tecnico model)
         {
-            ModelState.Remove("Id");
+            if (!ModelState.IsValid) return View(model);
 
-            if (tecnico == null || string.IsNullOrWhiteSpace(tecnico.Nombre)
-                || string.IsNullOrWhiteSpace(tecnico.Email)
-                || string.IsNullOrWhiteSpace(tecnico.Clave))
-                return BadRequest("Todos los campos son obligatorios");
+            var client = _httpFactory.CreateClient("Api");
+            var content = new StringContent(JsonSerializer.Serialize(model), System.Text.Encoding.UTF8, "application/json");
+            var resp = await client.PutAsync($"tecnico/actualizar/{id}", content);
 
-            using (SqlConnection cn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
+            if (!resp.IsSuccessStatusCode)
             {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand("RegistrarTecnico", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@nombre", tecnico.Nombre);
-                cmd.Parameters.AddWithValue("@clave", tecnico.Clave);
-                cmd.Parameters.AddWithValue("@correo", tecnico.Email);
-                cmd.ExecuteNonQuery();
+                ModelState.AddModelError("", "Error al actualizar técnico");
+                return View(model);
             }
 
-            return Ok(new { success = true });
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public JsonResult Editar([FromBody] Usuario tecnico)
+        public async Task<IActionResult> Eliminar(int id)
         {
-            using (SqlConnection cn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-            {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand("ActualizarTecnico", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", tecnico.Id);
-                cmd.Parameters.AddWithValue("@nombre", tecnico.Nombre);
-                cmd.Parameters.AddWithValue("@correo", tecnico.Email);
-                cmd.Parameters.AddWithValue("@estado", "A");
-                cmd.ExecuteNonQuery();
-            }
-            return Json(new { success = true, message = "Técnico actualizado correctamente" });
+            var client = _httpFactory.CreateClient("Api");
+            var resp = await client.DeleteAsync($"tecnico/eliminar/{id}");
+            return RedirectToAction("Index");
         }
-
-        [HttpPost]
-        public IActionResult Eliminar([FromBody] IdRequest request)
-        {
-            if (request == null || request.Id <= 0)
-                return BadRequest("Id inválido");
-
-            using (SqlConnection cn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
-            {
-                cn.Open();
-                SqlCommand cmd = new SqlCommand("EliminarTecnico", cn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", request.Id);
-                cmd.ExecuteNonQuery();
-            }
-
-            return Ok(new { success = true });
-        }
-
-        // DTO simple
-        public class IdRequest
-        {
-            public int Id { get; set; }
-        }
-
     }
 }

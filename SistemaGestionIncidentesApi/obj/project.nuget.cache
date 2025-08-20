@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2dnTH2/h/vk=",
+  "dgSpecHash": "WSYwMGYGBiA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Yheremy Menacho\\Source\\Repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\SistemaGestionIncidentesApi.csproj",
+  "projectFilePath": "C:\\Users\\Yheremy Menacho\\source\\repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\SistemaGestionIncidentesApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Yheremy Menacho\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\Yheremy Menacho\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",

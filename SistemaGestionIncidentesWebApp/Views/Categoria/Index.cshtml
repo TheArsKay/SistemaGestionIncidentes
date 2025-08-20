@@ -51,6 +51,7 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
     <script>
+        const apiBaseUrl = "https://localhost:7162/api"; // Ajusta al puerto de tu API
         let tabla;
 
         $(document).ready(function () {
@@ -64,15 +65,16 @@
             $("#btnGuardar").click(function () {
                 let categoria = {
                     Id: parseInt($("#categoriaId").val()) || 0,
-                    NombreCategoria: $("#nombreCategoria").val(),
+                    Nombre: $("#nombreCategoria").val(),
                     Estado: "A"
                 };
 
-                let url = categoria.Id > 0 ? "/Categoria/EditarJson" : "/Categoria/CrearJson";
+                let url = categoria.Id > 0 ? `${apiBaseUrl}/Categoria/actualizar/${categoria.Id}` : `${apiBaseUrl}/Categoria/registrar`;
+                let type = categoria.Id > 0 ? "PUT" : "POST";
 
                 $.ajax({
                     url: url,
-                    type: "POST",
+                    type: type,
                     contentType: "application/json",
                     data: JSON.stringify(categoria),
                     success: function () {
@@ -88,7 +90,7 @@
         });
 
         function cargarTabla() {
-            $.get("/Categoria/Listar", function (data) {
+            $.get(`${apiBaseUrl}/Categoria/listar`, function (data) {
                 if ($.fn.DataTable.isDataTable("#tablaCategorias")) {
                     tabla.destroy();
                 }
@@ -97,13 +99,13 @@
                     data: data,
                     columns: [
                         { data: "id" },
-                        { data: "nombreCategoria" },
+                        { data: "nombre" },   // <-- propiedad correcta que devuelve tu API
                         { data: "estado" },
                         {
                             data: null,
                             render: function (row) {
                                 return `
-                                    <button class='btn btn-warning btn-sm' onclick='editar(${row.id}, "${row.nombreCategoria}")'>Editar</button>
+                                    <button class='btn btn-warning btn-sm' onclick='editar(${row.id}, "${row.nombre}")'>Editar</button>
                                     <button class='btn btn-danger btn-sm' onclick='eliminar(${row.id})'>Eliminar</button>
                                 `;
                             }
@@ -124,10 +126,8 @@
         function eliminar(id) {
             if (confirm("¿Seguro que quieres eliminar esta categoría?")) {
                 $.ajax({
-                    url: "/Categoria/EliminarJson",
-                    type: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify({ Id: id }),
+                    url: `${apiBaseUrl}/Categoria/eliminar/${id}`,
+                    type: "DELETE",
                     success: function () {
                         cargarTabla();
                     },
@@ -144,3 +144,4 @@
         }
     </script>
 }
+
