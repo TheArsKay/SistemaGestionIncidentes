@@ -22,7 +22,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             using (var http = new HttpClient())
             {
                 http.BaseAddress = new Uri(_config["Services:URL"]);
-                var msg = http.GetAsync("Incidentes/listar").Result;
+                var msg = http.GetAsync("incidentes/listarResumen").Result;
 
                 if (!msg.IsSuccessStatusCode)
                 {

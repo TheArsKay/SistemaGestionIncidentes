@@ -1,45 +1,31 @@
-using Microsoft.OpenApi.Models;
+using FinancieraAPI.Data;
+using SistemaGestionIncidentesApi.Data;
+using SistemaGestionIncidentesApi.Data.Contrato;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddControllers();
-
-// CORS para que la WebApp pueda consumir la API (ajusta orígenes para producción)
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowWebApp", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
-});
-
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "SistemaGestionIncidentes API", Version = "v1" });
-});
+builder.Services.AddSwaggerGen();
+
+// INYECTAR DEPENDENCIAS
+builder.Services.AddScoped<IEstadoIncidente, EstadoIncidenteRepositorio>();
+builder.Services.AddScoped<Iincidente, IncidenteRespositorio>();
+builder.Services.AddScoped<IUsuario, UsuarioRepositorio>();
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
-
-    // Swagger
     app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SistemaGestionIncidentes API v1"));
+    app.UseSwaggerUI();
 }
 
-// Middleware pipeline
 app.UseHttpsRedirection();
-
-app.UseRouting();
-
-// Usar CORS antes de los controllers
-app.UseCors("AllowWebApp");
 
 app.UseAuthorization();
 

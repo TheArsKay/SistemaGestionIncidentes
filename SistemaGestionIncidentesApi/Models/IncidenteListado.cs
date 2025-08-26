@@ -1,4 +1,4 @@
-﻿namespace SistemaGestionIncidentesApi.Models
+﻿namespace SistemaGestionIncidentesWebApp.Models
 {
     public class IncidenteListado
     {
@@ -6,6 +6,6 @@
         public string Titulo_Incidente { get; set; }
         public string Usuario_Reporta { get; set; }
         public string Estado { get; set; }
-        public string Tecnico_Asignado { get; set; } 
+        public string Tecnico_Asignado { get; set; }
     }
 }

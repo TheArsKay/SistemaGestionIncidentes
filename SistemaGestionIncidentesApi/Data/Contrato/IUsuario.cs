@@ -1,4 +1,5 @@
-﻿using SistemaGestionIncidentesApi.Models;
+﻿
+using SistemaGestionIncidentesApi.Models;
 
 namespace SistemaGestionIncidentesApi.Data.Contrato
 {

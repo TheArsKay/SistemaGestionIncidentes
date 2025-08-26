@@ -1,10 +1,8 @@
 ﻿using BCrypt.Net;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration.UserSecrets;
 using SistemaGestionIncidentesApi.Data.Contrato;
 using SistemaGestionIncidentesApi.Models;
 using System.Data;
-using System.Reflection.PortableExecutable;
 
 namespace SistemaGestionIncidentesApi.Data
 {
@@ -23,6 +21,7 @@ namespace SistemaGestionIncidentesApi.Data
         {
             Usuario usuario = null;
 
+#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
             using (var conexion = new SqlConnection(cadenaConexion))
             {
                 conexion.Open();
@@ -54,6 +53,7 @@ namespace SistemaGestionIncidentesApi.Data
                     }
                 }
             }
+#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
             return usuario; // null si las credenciales no coinciden
         }
 
@@ -69,7 +69,7 @@ namespace SistemaGestionIncidentesApi.Data
                     using (var reader = comando.ExecuteReader())
                     {
                         while (reader.Read())
-                        { 
+                        {
                             listado.Add(new Usuario()
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("id")),
