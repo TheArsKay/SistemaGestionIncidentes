@@ -2,81 +2,111 @@
 
 @{
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-    ViewData["Title"] = "Editar incidente";
+    ViewData["Title"] = "Editar Incidente";
+
+    var estados = ViewBag.Estados as IEnumerable<SelectListItem> ?? new List<SelectListItem>();
+    var tecnicos = ViewBag.Tecnicos as IEnumerable<SelectListItem> ?? new List<SelectListItem>();
+    var categorias = ViewBag.Categorias as IEnumerable<SelectListItem> ?? new List<SelectListItem>();
+    var usuarios = ViewBag.Usuarios as IEnumerable<SelectListItem> ?? new List<SelectListItem>();
+
+    string selectedEstado = Model?.EstadoIncidente?.Id.ToString()
+                           ?? (Model?.GetType().GetProperty("idEstadoIncidente")?.GetValue(Model)?.ToString() ?? "0");
+    string selectedTecnico = Model?.UsuarioTecnico?.Id.ToString()
+                           ?? (Model?.GetType().GetProperty("idUsuarioTecnico")?.GetValue(Model)?.ToString() ?? "0");
+    string selectedCategoria = Model?.Categoria?.Id.ToString()
+                           ?? (Model?.GetType().GetProperty("idCategoria")?.GetValue(Model)?.ToString() ?? "0");
+    string selectedUsuarioReporta = Model?.UsuarioReporta?.Id.ToString()
+                           ?? (Model?.GetType().GetProperty("idUsuarioReporta")?.GetValue(Model)?.ToString() ?? "0");
+
+    string categoriaTexto = categorias.FirstOrDefault(c => c.Value == selectedCategoria)?.Text ?? "-";
+    string tecnicoTexto = tecnicos.FirstOrDefault(t => t.Value == selectedTecnico)?.Text ?? "-";
+    string usuarioTexto = usuarios.FirstOrDefault(u => u.Value == selectedUsuarioReporta)?.Text ?? "-";
 }
 
-<link rel="stylesheet" href="~/css/incidentes.css" />
+<h2 class="mb-3">Editar incidente #@Model?.Id</h2>
 
-<div class="card shadow-sm">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Editar incidente #@Model.Id</h5>
-        <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@Model.Id">Cancelar</a>
-            </div>
+@if (TempData["EditError"] != null)
+{
+    <div class="alert alert-danger">@TempData["EditError"]</div>
+}
+@if (TempData["EditSuccess"] != null)
+{
+    <div class="alert alert-success">@TempData["EditSuccess"]</div>
+}
 
-    <div class="card-body">
-        @* El formulario POST invoca la acción Edit(Incidente incidente) de tu controlador *@
-        <form asp-action="Edit" method="post">
-            @Html.AntiForgeryToken()
+<form asp-action="Edit" method="post" class="needs-validation" novalidate>
+    @Html.AntiForgeryToken()
 
-            @* Id (oculto) *@
-            <input type="hidden" asp-for="Id" />
-            @* dentro del form, por ejemplo justo después de: <input type="hidden" asp-for="Id" /> *@
-            <input type="hidden" asp-for="DescripcionIncidente" />
+    <input type="hidden" name="Id" value="@Model?.Id" />
 
+    <input type="hidden" name="idCategoria" value="@selectedCategoria" />
+    <input type="hidden" name="idUsuarioTecnico" value="@selectedTecnico" />
+    <input type="hidden" name="idUsuarioReporta" value="@selectedUsuarioReporta" />
+    <input type="hidden" name="TituloIncidente" value="@Model?.TituloIncidente" />
+    <input type="hidden" name="DescripcionIncidente" value="@Model?.DescripcionIncidente" />
 
-            <div class="mb-3">
-                <label class="form-label">Título</label>
-                <input class="form-control" asp-for="TituloIncidente" readonly />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Usuario que reporta</label>
-                <input class="form-control" value="@Model.UsuarioReporta?.Nombre" readonly />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Categoría</label>
-                <input class="form-control" value="@Model.Categoria?.Nombre" readonly />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Estado</label>
-                @* Usamos tag-helper para renderizar las opciones y seleccionar automáticamente *@
-                <select class="form-select" asp-for="EstadoIncidente.Id" asp-items="ViewBag.estadoIncidente"></select>
-
-                @* Para compatibilidad con APIs que esperan un int "idEstadoIncidente", incluimos también este campo oculto que será actualizado por JS al enviar si es necesario. *@
-                <input type="hidden" id="idEstadoIncidente" name="idEstadoIncidente" value="@(Model.EstadoIncidente?.Id ?? 0)" />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Solución</label>
-                <textarea class="form-control" asp-for="SolucionIncidente" rows="5"></textarea>
-            </div>
-
-            <div class="d-flex gap-2">
-                <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                <a class="btn btn-outline-secondary" asp-action="Details" asp-route-id="@Model.Id">Volver</a>
-            </div>
-        </form>
+    <div class="mb-3">
+        <label class="form-label">Código</label>
+        <input class="form-control" value="@Model?.Id" readonly />
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div class="mb-3">
+        <label class="form-label">Título</label>
+        <input class="form-control" value="@Model?.TituloIncidente" readonly />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Descripción</label>
+        <textarea class="form-control" rows="4" readonly>@Model?.DescripcionIncidente</textarea>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Solución (opcional)</label>
+        <textarea name="SolucionIncidente" class="form-control" rows="3">@Model?.SolucionIncidente</textarea>
+        <small class="form-text text-muted">Puedes dejarlo vacío si aún no hay solución.</small>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Categoría</label>
+            <input class="form-control" value="@categoriaTexto" readonly />
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Estado</label>
+            <select name="idEstadoIncidente" class="form-select">
+                <option value="0">--SELECCIONE--</option>
+                @foreach (var it in estados)
+                {
+                    if (it.Value == selectedEstado)
+                    {
+                        <option value="@it.Value" selected="selected">@it.Text</option>
+                    }
+                    else
+                    {
+                        <option value="@it.Value">@it.Text</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <label class="form-label">Técnico asignado</label>
+            <input class="form-control" value="@tecnicoTexto" readonly />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Usuario que reporta</label>
+        <input class="form-control" value="@usuarioTexto" readonly />
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a class="btn btn-secondary" asp-action="MisIncidentes" asp-route-id="@Model?.Id">Cancelar</a>
+    </div>
+</form>
 
 @section Scripts {
-    <script>
-        // Al cambiar el select actualizamos el campo hidden idEstadoIncidente
-        (function () {
-            var sel = document.querySelector('select[name="EstadoIncidente.Id"]');
-            var hidden = document.getElementById('idEstadoIncidente');
-            if (!sel || !hidden) return;
-            sel.addEventListener('change', function () {
-                hidden.value = sel.value || 0;
-            });
-            // asegurar que al cargar esté sincronizado
-            hidden.value = sel.value || hidden.value || 0;
-        })();
-    </script>
+    <partial name="_ValidationScriptsPartial" />
 }

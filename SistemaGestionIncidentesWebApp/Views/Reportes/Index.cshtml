@@ -67,7 +67,7 @@
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Id)</th>
-            <th>@Html.DisplayNameFor(model => model.Titulo_Incidente)</th>
+            <th>@Html.DisplayNameFor(model => model.TituloIncidente)</th>
             <th>Usuario</th>
             <th>Técnico</th>
             <th>Estado</th>
@@ -79,11 +79,11 @@
         {
             <tr>
                 <td>@item.Id</td>
-                <td>@item.Titulo_Incidente</td>
-                <td>@(((SelectList)ViewBag.Usuarios).FirstOrDefault(u => u.Value == item.Id_Usuario.ToString())?.Text)</td>
-                <td>@(((SelectList)ViewBag.Tecnicos).FirstOrDefault(t => t.Value == item.Id_Tecnico.ToString())?.Text)</td>
-                <td>@(((SelectList)ViewBag.Estados).FirstOrDefault(e => e.Value == item.Id_Estado.ToString())?.Text)</td>
-                <td>@(((SelectList)ViewBag.Categorias).FirstOrDefault(c => c.Value == item.Id_Categoria.ToString())?.Text)</td>
+                <td>@item.TituloIncidente</td>
+                <td>@(((SelectList)ViewBag.Usuarios).FirstOrDefault(u => u.Value == item.UsuarioReporta.ToString())?.Text)</td>
+                <td>@(((SelectList)ViewBag.Tecnicos).FirstOrDefault(t => t.Value == item.UsuarioTecnico.ToString())?.Text)</td>
+                <td>@(((SelectList)ViewBag.Estados).FirstOrDefault(e => e.Value == item.EstadoIncidente.ToString())?.Text)</td>
+                <td>@(((SelectList)ViewBag.Categorias).FirstOrDefault(c => c.Value == item.Categoria.ToString())?.Text)</td>
             </tr>
         }
     </tbody>
