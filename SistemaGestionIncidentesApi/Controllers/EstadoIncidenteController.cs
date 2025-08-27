@@ -6,7 +6,7 @@ using SistemaGestionIncidentesApi.Models;
 
 namespace SistemaGestionIncidentesApi.Controllers
 {
-    // api/Incidente
+ 
     [Route("api/estados-incidente")]
     [ApiController]
     public class EstadoIncidenteController : ControllerBase

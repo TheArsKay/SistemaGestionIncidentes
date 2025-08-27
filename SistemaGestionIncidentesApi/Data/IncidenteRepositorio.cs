@@ -84,7 +84,7 @@ namespace SistemaGestionIncidentesApi.Data
             var lista = new List<Incidente>();
             using var cn = new SqlConnection(cadenaConexion);
             cn.Open();
-            using var cmd = new SqlCommand("ListarTodosIncidentes", cn); // si no existe, usa un SELECT simple
+            using var cmd = new SqlCommand("ListarTodosIncidentes", cn);
             cmd.CommandType = CommandType.StoredProcedure;
             using var rd = cmd.ExecuteReader();
             while (rd.Read())
@@ -98,7 +98,7 @@ namespace SistemaGestionIncidentesApi.Data
         {
             var lista = new List<Incidente>();
 
-            using (var cn = new SqlConnection(cadenaConexion)) // ajusta _cadenaConexion si es otro nombre
+            using (var cn = new SqlConnection(cadenaConexion)) 
             using (var cmd = new SqlCommand(@"
         SELECT 
             i.id,
@@ -144,7 +144,7 @@ namespace SistemaGestionIncidentesApi.Data
         {
             Incidente incidente = null;
 
-            using (var cn = new SqlConnection(cadenaConexion)) // ajusta el nombre del campo si tu connection string es otro
+            using (var cn = new SqlConnection(cadenaConexion))
             using (var cmd = new SqlCommand("ObtenerIncidentePorID", cn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -168,7 +168,7 @@ namespace SistemaGestionIncidentesApi.Data
         {
             using var cn = new SqlConnection(cadenaConexion);
             cn.Open();
-            using var cmd = new SqlCommand("RegistrarIncidente", cn); // Asumo SP RegistrarIncidente
+            using var cmd = new SqlCommand("RegistrarIncidente", cn); 
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@tituloIncidente", (object)incidente.TituloIncidente ?? DBNull.Value);
             cmd.Parameters.AddWithValue("@descripcionIncidente", (object)incidente.DescripcionIncidente ?? DBNull.Value);
@@ -178,7 +178,7 @@ namespace SistemaGestionIncidentesApi.Data
             cmd.Parameters.AddWithValue("@idEstado", incidente.idEstadoIncidente);
             cmd.Parameters.AddWithValue("@idTecnico", (object)incidente.idUsuarioTecnico ?? DBNull.Value);
 
-            // Si el SP devuelve el id nuevo, leerlo:
+   
             var insertedIdObj = cmd.ExecuteScalar();
             if (insertedIdObj != null && int.TryParse(insertedIdObj.ToString(), out var newId))
             {
@@ -209,12 +209,11 @@ namespace SistemaGestionIncidentesApi.Data
             {
                 cmd.CommandType = CommandType.Text;
 
-                // Parámetros (usar DBNull.Value no es necesario aquí porque usamos CASE WHEN)
+               
                 cmd.Parameters.AddWithValue("@titulo", (object)incidente.TituloIncidente ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@descripcion", (object)incidente.DescripcionIncidente ?? DBNull.Value);
                 cmd.Parameters.AddWithValue("@solucion", (object)incidente.SolucionIncidente ?? DBNull.Value);
 
-                // Si tu modelo usa otros nombres, ajusta aquí
                 cmd.Parameters.AddWithValue("@idCategoria", incidente.idCategoria);
                 cmd.Parameters.AddWithValue("@idUsuarioReporta", incidente.idUsuarioReporta);
                 cmd.Parameters.AddWithValue("@idUsuarioTecnico", incidente.idUsuarioTecnico);
@@ -226,7 +225,6 @@ namespace SistemaGestionIncidentesApi.Data
                 var filas = cmd.ExecuteNonQuery();
             }
 
-            // Retornar el objeto actualizado (puedes usar ObtenerPorID que ya tienes)
             return ObtenerPorID(incidente.Id);
         }
 

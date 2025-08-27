@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace SistemaGestionIncidentesApi.Controllers
 {
-    // api/Incidente
+
     [Route("api/incidentes")]
     [ApiController]
     public class IncidenteController : ControllerBase
@@ -48,12 +48,11 @@ namespace SistemaGestionIncidentesApi.Controllers
             return Ok(inc);
         }
 
-        // En SistemaGestionIncidentesApi.Controllers.IncidenteController (API)
+
         [HttpGet("tecnico/{tecnicoId}")]
         public IActionResult ListarPorTecnico(int tecnicoId)
         {
-            // Asumo que tu repositorio tiene un método para listar por técnico.
-            // Si no existe, crea _incidenteRepo.ListarPorTecnico(int tecnicoId)
+ 
             var datos = _incidenteRepo.ListarPorTecnico(tecnicoId);
             return Ok(datos);
         }
@@ -73,7 +72,7 @@ namespace SistemaGestionIncidentesApi.Controllers
             var actual = _incidenteRepo.ObtenerPorID(id);
             if (actual == null) return NotFound("Incidente no encontrado.");
 
-            // Aplicar cambios permitidos (adaptado a PascalCase)
+     
             actual.TituloIncidente = incoming.TituloIncidente ?? actual.TituloIncidente;
             actual.DescripcionIncidente = incoming.DescripcionIncidente ?? actual.DescripcionIncidente;
             actual.SolucionIncidente = incoming.SolucionIncidente ?? actual.SolucionIncidente;
@@ -81,27 +80,23 @@ namespace SistemaGestionIncidentesApi.Controllers
             actual.idUsuarioTecnico = incoming.idUsuarioTecnico != 0 ? incoming.idUsuarioTecnico : actual.idUsuarioTecnico;
             actual.idUsuarioReporta = incoming.idUsuarioReporta != 0 ? incoming.idUsuarioReporta : actual.idUsuarioReporta;
 
-            // Manejo de estado: si frontend envía idEstadoIncidente, lo procesamos
-            // Manejo de estado: si frontend envía idEstadoIncidente, lo procesamos
-            // --- Reemplaza el bloque de manejo de estado por este ---
+
             if (incoming.idEstadoIncidente != 0)
         {
-                // Tomamos la lista de estados para validar/existe (opcional)
+    
                 var estados = _estadoRepo.Listado();
 
-                // Simplemente guardamos el id enviado por el frontend.
-                // No convertimos "Resuelto" a "Cerrado" y no manipulamos ninguna fecha de cierre
+
                 actual.idEstadoIncidente = incoming.idEstadoIncidente;
         }
 
 
 
-            // FechaModificacion la setea el SP, pero opcionalmente la dejamos localmente
-            actual.FechaModificacion = DateTime.Now; // opcional — el SP la sobreescribirá
+         
+            actual.FechaModificacion = DateTime.Now; 
 
             var actualizado = _incidenteRepo.Actualizar(actual);
 
-            // Notificar al usuario reportante
             try
             {
                 if (actualizado != null)
@@ -114,7 +109,7 @@ namespace SistemaGestionIncidentesApi.Controllers
             }
             catch
         {
-                // registrar log en lugar de fallar el request
+            
             }
 
             return Ok(actualizado);
