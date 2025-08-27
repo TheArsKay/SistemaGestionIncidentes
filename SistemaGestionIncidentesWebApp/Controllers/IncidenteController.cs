@@ -8,7 +8,6 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
 {
     public class IncidenteController : Controller
     {
-
         private readonly IConfiguration _mbmaConfig;
         public IncidenteController(IConfiguration iConfig)
         {
@@ -47,8 +46,6 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
             }
             return lstEstadoIncidente;
         }
-
-    
 
         private Incidente obtenerPorId(int id)
         {
@@ -108,7 +105,6 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
 
         #endregion
 
-
         public IActionResult Index(int page = 1, int idEstadoIncidente = 0, int numreg = 15)
         {
             var listado = obtenerIncidente();
@@ -119,10 +115,8 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
             var lstEstadoInc = obtenerEstadosIncidente();
             lstEstadoInc.Insert(0, new EstadoIncidente() { Id = 0, NombreEstado = "--SELECCIONE--" });
 
-
             int totalRegistros = listado.Count();
             int registrosPorPaginas = numreg;
-
 
             int totalPaginas = (int)Math.Ceiling((double)totalRegistros / registrosPorPaginas);
             int omitir = registrosPorPaginas * (page - 1);
@@ -130,7 +124,6 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
             //VIEWBAG
             ViewBag.totalPaginas = totalPaginas;
             ViewBag.estadoIncidente = new SelectList(lstEstadoInc, "Id", "NombreEstado", idEstadoIncidente);
-
 
             ViewBag.registroSeleccionado = numreg;
             ViewBag.EstadoIncidenteSeleccionado = idEstadoIncidente;
@@ -150,7 +143,6 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
         [HttpPost]
         public IActionResult Create(Incidente incidente)
         {
-     
             Incidente nuevoID = registrarIncidente(incidente);
             return RedirectToAction("Details", new { id = nuevoID.Id });
         }

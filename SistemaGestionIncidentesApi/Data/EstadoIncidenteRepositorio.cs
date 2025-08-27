@@ -3,7 +3,7 @@ using SistemaGestionIncidentesApi.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
-namespace FinancieraAPI.Data
+namespace SistemaGestionIncidentesApi.Data
 {
     public class EstadoIncidenteRepositorio : IEstadoIncidente
     {

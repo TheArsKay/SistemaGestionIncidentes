@@ -8,7 +8,6 @@ builder.Services.AddSession();
 // HttpClient para consumir la API
 builder.Services.AddHttpClient("Api", client =>
 {
-    // "Services:URL" debe estar en appsettings.json del WebApp (ej: "https://localhost:7162/api/")
     client.BaseAddress = new Uri(builder.Configuration["Services:URL"]);
 });
 
