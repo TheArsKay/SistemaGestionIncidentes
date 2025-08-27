@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SistemaGestionIncidentesWebApp.Models.Incidente>
+@model SistemaGestionIncidentesWebApp.Models.Incidente
 
 @{
     ViewData["Title"] = "Create";
@@ -6,72 +6,64 @@
 
 <h1>Create</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Titulo_Incidente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion_Incidente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Solucion_Incidente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_Usuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_Categoria)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Id_Tecnico)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titulo_Incidente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion_Incidente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Solucion_Incidente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_Usuario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_Categoria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id_Tecnico)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+<h4>Incidente</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Titulo_Incidente" class="control-label"></label>
+                <input asp-for="Titulo_Incidente" class="form-control" />
+                <span asp-validation-for="Titulo_Incidente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion_Incidente" class="control-label"></label>
+                <input asp-for="Descripcion_Incidente" class="form-control" />
+                <span asp-validation-for="Descripcion_Incidente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Solucion_Incidente" class="control-label"></label>
+                <input asp-for="Solucion_Incidente" class="form-control" />
+                <span asp-validation-for="Solucion_Incidente" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Id_Usuario" class="control-label"></label>
+                <input asp-for="Id_Usuario" class="form-control" />
+                <span asp-validation-for="Id_Usuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Id_Categoria" class="control-label"></label>
+                <input asp-for="Id_Categoria" class="form-control" />
+                <span asp-validation-for="Id_Categoria" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Id_Estado" class="control-label"></label>
+                <input asp-for="Id_Estado" class="form-control" />
+                <span asp-validation-for="Id_Estado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Id_Tecnico" class="control-label"></label>
+                <input asp-for="Id_Tecnico" class="form-control" />
+                <span asp-validation-for="Id_Tecnico" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-    </tbody>
-</table>
+
