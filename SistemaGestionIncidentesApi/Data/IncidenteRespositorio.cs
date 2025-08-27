@@ -26,13 +26,13 @@ namespace SistemaGestionIncidentesApi.Data
                     command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@idIncidente", incidente.Id);
-                    command.Parameters.AddWithValue("@tituloIncidente", incidente.Titulo_Incidente);
-                    command.Parameters.AddWithValue("@descripcionIncidente", incidente.Descripcion_Incidente);
-                    command.Parameters.AddWithValue("@solucionIncidente", incidente.Solucion_Incidente);
-                    command.Parameters.AddWithValue("@idUsuario", incidente.Id_Usuario);
-                    command.Parameters.AddWithValue("@idCategoria", incidente.Id_Categoria);
-                    command.Parameters.AddWithValue("@idEstado", incidente.Id_Estado);
-                    command.Parameters.AddWithValue("@idTecnico", incidente.Id_Tecnico);
+                    command.Parameters.AddWithValue("@tituloIncidente", incidente.TituloIncidente);
+                    command.Parameters.AddWithValue("@descripcionIncidente", incidente.DescripcionIncidente);
+                    command.Parameters.AddWithValue("@solucionIncidente", incidente.SolucionIncidente);
+                    command.Parameters.AddWithValue("@idUsuario", incidente.idUsuarioReporta);
+                    command.Parameters.AddWithValue("@idCategoria", incidente.idCategoria);
+                    command.Parameters.AddWithValue("@idEstado", incidente.idEstadoIncidente);
+                    command.Parameters.AddWithValue("@idTecnico", incidente.idUsuarioTecnico);
 
                     command.ExecuteNonQuery();
                 }
@@ -113,13 +113,13 @@ namespace SistemaGestionIncidentesApi.Data
                 {
                     command.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("@tituloIncidente", incidente.Titulo_Incidente);
-                    command.Parameters.AddWithValue("@descripcionIncidente", incidente.Descripcion_Incidente);
-                    command.Parameters.AddWithValue("@solucionIncidente", incidente.Solucion_Incidente);
-                    command.Parameters.AddWithValue("@idUsuario", incidente.Id_Usuario);
-                    command.Parameters.AddWithValue("@idCategoria", incidente.Id_Categoria);
-                    command.Parameters.AddWithValue("@idEstado", incidente.Id_Estado);
-                    command.Parameters.AddWithValue("@idTecnico", incidente.Id_Tecnico);
+                    command.Parameters.AddWithValue("@tituloIncidente", incidente.TituloIncidente);
+                    command.Parameters.AddWithValue("@descripcionIncidente", incidente.DescripcionIncidente);
+                    command.Parameters.AddWithValue("@solucionIncidente", incidente.SolucionIncidente);
+                    command.Parameters.AddWithValue("@idUsuario", incidente.idUsuarioReporta);
+                    command.Parameters.AddWithValue("@idCategoria", incidente.idCategoria);
+                    command.Parameters.AddWithValue("@idEstado", incidente.idEstadoIncidente);
+                    command.Parameters.AddWithValue("@idTecnico", incidente.idUsuarioTecnico);
 
                     nuevoID = Convert.ToInt32(command.ExecuteScalar());
                 }
