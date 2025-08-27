@@ -27,7 +27,28 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             return View(lista);
         }
 
-       
+        public IActionResult Crear()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Crear(Tecnico model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var client = _httpFactory.CreateClient("Api");
+            var content = new StringContent(JsonSerializer.Serialize(model), System.Text.Encoding.UTF8, "application/json");
+            var resp = await client.PostAsync("tecnico/registrar", content);
+
+            if (!resp.IsSuccessStatusCode)
+            {
+                ModelState.AddModelError("", "Error al registrar técnico");
+                return View(model);
+            }
+
+            return RedirectToAction("Index");
+        }
 
         public async Task<IActionResult> Editar(int id)
         {

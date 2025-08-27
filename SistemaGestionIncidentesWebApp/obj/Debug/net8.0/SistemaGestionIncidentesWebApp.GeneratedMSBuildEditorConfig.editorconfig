@@ -48,6 +48,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jaWRlbnRlc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Yheremy Menacho/source/repos/TheArsKay/SistemaGestionIncidentes/SistemaGestionIncidentesWebApp/Views/Incidente/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jaWRlbnRlXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yheremy Menacho/source/repos/TheArsKay/SistemaGestionIncidentes/SistemaGestionIncidentesWebApp/Views/Incidente/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jaWRlbnRlXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Yheremy Menacho/source/repos/TheArsKay/SistemaGestionIncidentes/SistemaGestionIncidentesWebApp/Views/Incidente/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jaWRlbnRlXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -60,8 +68,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jaWRlbnRlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Yheremy Menacho/source/repos/TheArsKay/SistemaGestionIncidentes/SistemaGestionIncidentesWebApp/Views/Incidente/ListadoIncidente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jaWRlbnRlXExpc3RhZG9JbmNpZGVudGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yheremy Menacho/source/repos/TheArsKay/SistemaGestionIncidentes/SistemaGestionIncidentesWebApp/Views/Incidente/MantenerIncidente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jaWRlbnRlXE1hbnRlbmVySW5jaWRlbnRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Yheremy Menacho/source/repos/TheArsKay/SistemaGestionIncidentes/SistemaGestionIncidentesWebApp/Views/Incidente/MisIncidentes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jaWRlbnRlXE1pc0luY2lkZW50ZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Yheremy Menacho/source/repos/TheArsKay/SistemaGestionIncidentes/SistemaGestionIncidentesWebApp/Views/Reportes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVwb3J0ZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Yheremy Menacho/source/repos/TheArsKay/SistemaGestionIncidentes/SistemaGestionIncidentesWebApp/Views/Shared/Error.cshtml]

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SistemaGestionIncidentesWebApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad1c1e1c7fe1b2d106a922efdcd0062d6708173d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f09757ffe33e3f0818ef75eb892fd1f75a9df1d0")]
 [assembly: System.Reflection.AssemblyProductAttribute("SistemaGestionIncidentesWebApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SistemaGestionIncidentesWebApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

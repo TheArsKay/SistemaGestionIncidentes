@@ -50,6 +50,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             // Configurar opciones de menú según rol
             var opciones = new List<(string Texto, string Controller, string Action)>();
 
+
             switch (rol)
             {
                 case "Operador":

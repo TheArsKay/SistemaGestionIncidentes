@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SistemaGestionIncidentesApi.Data.Contrato;
 using SistemaGestionIncidentesApi.Models;
 using System;
@@ -7,6 +9,7 @@ using System.Linq;
 
 namespace SistemaGestionIncidentesApi.Controllers
 {
+    // api/Incidente
     [Route("api/incidentes")]
     [ApiController]
     public class IncidenteController : ControllerBase
@@ -82,14 +85,14 @@ namespace SistemaGestionIncidentesApi.Controllers
             // Manejo de estado: si frontend envía idEstadoIncidente, lo procesamos
             // --- Reemplaza el bloque de manejo de estado por este ---
             if (incoming.idEstadoIncidente != 0)
-            {
+        {
                 // Tomamos la lista de estados para validar/existe (opcional)
                 var estados = _estadoRepo.Listado();
 
                 // Simplemente guardamos el id enviado por el frontend.
                 // No convertimos "Resuelto" a "Cerrado" y no manipulamos ninguna fecha de cierre
                 actual.idEstadoIncidente = incoming.idEstadoIncidente;
-            }
+        }
 
 
 
@@ -110,7 +113,7 @@ namespace SistemaGestionIncidentesApi.Controllers
                 }
             }
             catch
-            {
+        {
                 // registrar log en lugar de fallar el request
             }
 

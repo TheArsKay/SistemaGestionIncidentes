@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using SistemaGestionIncidentesApi.Models;
+using System.Data;
 
 namespace SistemaGestionIncidentesApi.Controllers
 {

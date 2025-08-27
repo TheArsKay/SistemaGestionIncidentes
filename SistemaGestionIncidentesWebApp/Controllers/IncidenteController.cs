@@ -14,71 +14,79 @@ namespace SistemaGestionIncidentesWebApp.Controllers
 {
     public class IncidenteController : Controller
     {
-        private readonly IConfiguration _mbmaConfig;
-        public IncidenteController(IConfiguration iConfig)
+        private readonly IConfiguration _config;
+
+        public IncidenteController(IConfiguration config)
         {
-            _mbmaConfig = iConfig;
+            _config = config;
         }
 
-        #region . MÉTODOS PRIVADOS .
+        #region Métodos Privados (Consumo API)
 
-        private List<Incidente> obtenerIncidente()
+        private List<IncidenteListado> obtenerIncidentesResumen()
         {
-            var lstIncidente = new List<Incidente>();
-            using (var clienteHTTP = new HttpClient())
+            var lista = new List<IncidenteListado>();
+            using (var http = new HttpClient())
             {
-                clienteHTTP.BaseAddress = new Uri(_mbmaConfig["Services:URL"]);
+                http.BaseAddress = new Uri(_config["Services:URL"]);
+                var msg = http.GetAsync("incidentes/listarResumen").Result;
 
-                var mensaje = clienteHTTP.GetAsync("incidentes").Result;
+                if (!msg.IsSuccessStatusCode)
+                    throw new Exception("Error al consumir el API de incidentes (listarResumen).");
 
-                var data = mensaje.Content.ReadAsStringAsync().Result;
-
-                lstIncidente = JsonConvert.DeserializeObject<List<Incidente>>(data) ?? new List<Incidente>();
+                var data = msg.Content.ReadAsStringAsync().Result;
+                lista = JsonConvert.DeserializeObject<List<IncidenteListado>>(data);
             }
-            return lstIncidente;
+            return lista;
         }
 
-        private List<EstadoIncidente> obtenerEstadosIncidente()
+        private List<Incidente> obtenerIncidentes()
         {
-            var lstEstadoIncidente = new List<EstadoIncidente>();
-            using (var clienteHTTP = new HttpClient())
+            var lista = new List<Incidente>();
+            using (var http = new HttpClient())
             {
-                clienteHTTP.BaseAddress = new Uri(_mbmaConfig["Services:URL"]);
+                http.BaseAddress = new Uri(_config["Services:URL"]);
+                var msg = http.GetAsync("incidentes").Result;
 
-                var mensaje = clienteHTTP.GetAsync("estados-incidente").Result;
+                if (!msg.IsSuccessStatusCode)
+                    throw new Exception("Error al consumir el API de incidentes (listar).");
 
-                var data = mensaje.Content.ReadAsStringAsync().Result;
-
-                lstEstadoIncidente = JsonConvert.DeserializeObject<List<EstadoIncidente>>(data) ?? new List<EstadoIncidente>();
+                var data = msg.Content.ReadAsStringAsync().Result;
+                lista = JsonConvert.DeserializeObject<List<Incidente>>(data);
             }
-            return lstEstadoIncidente;
+            return lista;
         }
 
         private Incidente obtenerPorId(int id)
         {
-            Incidente incidente = new Incidente();
-            using (var clienteHTTP = new HttpClient())
+            Incidente incidente = null;
+            using (var http = new HttpClient())
             {
-                clienteHTTP.BaseAddress = new Uri(_mbmaConfig["Services:URL"]);
-                var mensaje = clienteHTTP.GetAsync($"incidentes/{id}").Result;
-                var data = mensaje.Content.ReadAsStringAsync().Result;
-                incidente = JsonConvert.DeserializeObject<Incidente>(data) ?? new Incidente();
+                http.BaseAddress = new Uri(_config["Services:URL"]);
+                var msg = http.GetAsync($"incidentes/{id}").Result;
+
+                if (!msg.IsSuccessStatusCode)
+                    throw new Exception("Error al obtener el incidente por ID.");
+
+                var data = msg.Content.ReadAsStringAsync().Result;
+                incidente = JsonConvert.DeserializeObject<Incidente>(data);
             }
             return incidente;
         }
 
-        private Incidente registrarIncidente(Incidente mbmaProducto)
+        private Incidente registrarIncidente(Incidente incidente)
         {
-            Incidente nuevo = new Incidente();
-            using (var clienteHTTP = new HttpClient())
+            Incidente nuevo = null;
+            using (var http = new HttpClient())
             {
-                clienteHTTP.BaseAddress = new Uri(_mbmaConfig["Services:URL"]);
+                http.BaseAddress = new Uri(_config["Services:URL"]);
+                var msg = http.PostAsJsonAsync("incidentes", incidente).Result;
 
-                StringContent contenido = new StringContent(JsonConvert.SerializeObject(mbmaProducto),
-                    System.Text.Encoding.UTF8, "application/json");
-                var mensaje = clienteHTTP.PostAsync("incidentes", contenido).Result;
-                var data = mensaje.Content.ReadAsStringAsync().Result;
-                nuevo = JsonConvert.DeserializeObject<Incidente>(data) ?? new Incidente();
+                if (!msg.IsSuccessStatusCode)
+                    throw new Exception("Error al registrar el incidente.");
+
+                var data = msg.Content.ReadAsStringAsync().Result;
+                nuevo = JsonConvert.DeserializeObject<Incidente>(data);
             }
 
             return nuevo;
@@ -86,177 +94,130 @@ namespace SistemaGestionIncidentesWebApp.Controllers
 
         private Incidente actualizarIncidente(Incidente incidente)
         {
-            if (incidente == null) return null;
-
-            // Extraer idEstadoIncidente del modelo o del formulario
-            int idEstado = 0;
-            try
+            Incidente actualizado = null;
+            using (var http = new HttpClient())
             {
-                idEstado = incidente?.EstadoIncidente?.Id ?? 0;
-                if (idEstado == 0 && Request?.Form != null && Request.Form.ContainsKey("idEstadoIncidente"))
-                {
-                    int.TryParse(Request.Form["idEstadoIncidente"].FirstOrDefault(), out idEstado);
-                }
+                http.BaseAddress = new Uri(_config["Services:URL"]);
+                var msg = http.PutAsJsonAsync("incidentes", incidente).Result;
+
+                if (!msg.IsSuccessStatusCode)
+                    throw new Exception("Error al actualizar el incidente.");
+
+                var data = msg.Content.ReadAsStringAsync().Result;
+                actualizado = JsonConvert.DeserializeObject<Incidente>(data);
             }
+            return actualizado;
+        }
             catch
             {
                 idEstado = 0;
             }
 
-            // Recuperar el incidente actual desde la API (fallback values)
-            Incidente existente = null;
-            try
+        private bool eliminarIncidente(int id)
+        {
+            using (var http = new HttpClient())
             {
-                existente = obtenerPorId(incidente.Id) ?? new Incidente();
+                http.BaseAddress = new Uri(_config["Services:URL"]);
+                var msg = http.DeleteAsync($"incidentes/{id}").Result;
+
+                if (!msg.IsSuccessStatusCode)
+                    throw new Exception("Error al eliminar el incidente.");
+
+                var data = msg.Content.ReadAsStringAsync().Result;
+                return JsonConvert.DeserializeObject<bool>(data);
             }
-            catch
-            {
-                existente = new Incidente();
-            }
-
-            // Si la vista no envió Descripcion o Solucion, usar las del existente (evita validation 400)
-            var descripcion = incidente.DescripcionIncidente ?? existente.DescripcionIncidente ?? string.Empty;
-            var solucion = incidente.SolucionIncidente ?? existente.SolucionIncidente ?? string.Empty;
-
-            // Determinar ids (si no llegan o son 0, los trataremos condicionadamente)
-            int idCategoria = incidente?.Categoria?.Id ?? existente?.Categoria?.Id ?? 0;
-            int idUsuarioTecnico = incidente?.UsuarioTecnico?.Id ?? existente?.UsuarioTecnico?.Id ?? 0;
-            int idUsuarioReporta = incidente?.UsuarioReporta?.Id ?? existente?.UsuarioReporta?.Id ?? 0;
-
-            // Construir payload dinámico (omitimos campos FK que serían 0 para no romper FK)
-            var job = new JObject();
-
-            // Título: enviar si existe (fallback desde existente)
-            var titulo = incidente?.TituloIncidente ?? existente?.TituloIncidente;
-            if (!string.IsNullOrWhiteSpace(titulo))
-                job["TituloIncidente"] = titulo;
-
-            // Descripción y solución: siempre enviar (API exige no nulos)
-            job["DescripcionIncidente"] = descripcion;
-            job["SolucionIncidente"] = solucion;
-
-            // Estado: enviar si está presente (>0)
-            if (idEstado > 0)
-                job["idEstadoIncidente"] = idEstado;
-
-            // Solo añadir FK si tienen valor válido (>0)
-            if (idCategoria > 0)
-                job["idCategoria"] = idCategoria;
-
-            if (idUsuarioTecnico > 0)
-                job["idUsuarioTecnico"] = idUsuarioTecnico;
+        }
 
             if (idUsuarioReporta > 0)
                 job["idUsuarioReporta"] = idUsuarioReporta;
 
-            using (var clienteHTTP = new HttpClient())
+        private List<Usuario> obtenerUsuarios()
+        {
+            var lista = new List<Usuario>();
+            using (var http = new HttpClient())
             {
-                clienteHTTP.BaseAddress = new Uri(_mbmaConfig["Services:URL"]);
-
-                var contenido = new StringContent(JsonConvert.SerializeObject(job),
-                    System.Text.Encoding.UTF8, "application/json");
-
-                var mensaje = clienteHTTP.PutAsync($"incidentes/{incidente.Id}", contenido).Result;
-                var data = mensaje.Content.ReadAsStringAsync().Result;
-
-                if (mensaje.IsSuccessStatusCode && !string.IsNullOrWhiteSpace(data))
-                {
-                    try
-                    {
-                        var actualizado = JsonConvert.DeserializeObject<Incidente>(data);
-                        return actualizado ?? incidente;
-                    }
-                    catch
-                    {
-                        return incidente;
-                    }
-                }
-                else
-                {
-                    // log para depuración
-                    System.Diagnostics.Debug.WriteLine($"PUT /incidentes/{incidente.Id} -> {(int)mensaje.StatusCode} {mensaje.ReasonPhrase}");
-                    System.Diagnostics.Debug.WriteLine("Request payload: " + job.ToString(Newtonsoft.Json.Formatting.None));
-                    System.Diagnostics.Debug.WriteLine("Response: " + data);
-                    return incidente;
-                }
+                http.BaseAddress = new Uri(_config["Services:URL"]);
+                var msg = http.GetAsync("usuarios").Result;
+                var data = msg.Content.ReadAsStringAsync().Result;
+                lista = JsonConvert.DeserializeObject<List<Usuario>>(data);
             }
+            return lista;
+        }
+
+        private List<Tecnico> obtenerTecnicos()
+        {
+            var lista = new List<Tecnico>();
+            using (var http = new HttpClient())
+            {
+                http.BaseAddress = new Uri(_config["Services:URL"]);
+                var msg = http.GetAsync("tecnico/listar").Result;
+                var data = msg.Content.ReadAsStringAsync().Result;
+                lista = JsonConvert.DeserializeObject<List<Tecnico>>(data);
+            }
+            return lista;
+        }
+
+        private List<EstadoIncidente> obtenerEstados()
+        {
+            var lista = new List<EstadoIncidente>();
+            using (var http = new HttpClient())
+            {
+                http.BaseAddress = new Uri(_config["Services:URL"]);
+                var msg = http.GetAsync("estados-incidente").Result;
+                var data = msg.Content.ReadAsStringAsync().Result;
+                lista = JsonConvert.DeserializeObject<List<EstadoIncidente>>(data);
+            }
+            return lista;
+        }
+
+        private List<Categoria> obtenerCategorias()
+        {
+            var lista = new List<Categoria>();
+            using (var http = new HttpClient())
+            {
+                http.BaseAddress = new Uri(_config["Services:URL"]);
+                var msg = http.GetAsync("categoria/listar").Result;
+                var data = msg.Content.ReadAsStringAsync().Result;
+                lista = JsonConvert.DeserializeObject<List<Categoria>>(data);
+            }
+            return lista;
         }
 
 
+        #endregion
 
 
-        private bool eliminarProducto(int id)
+        // Listados
+        public IActionResult MantenerIncidente(int page = 1, int numreg = 10)
         {
-            using (var clienteHTTP = new HttpClient())
-            {
-                clienteHTTP.BaseAddress = new Uri(_mbmaConfig["Services:URL"]);
-                var mensaje = clienteHTTP.DeleteAsync($"incidentes/{id}").Result;
+            var incidentes = obtenerIncidentes();
 
-                return mensaje.IsSuccessStatusCode;
-            }
+            // === Combos para mostrar nombres en vez de IDs ===
+            var usuarios = obtenerUsuarios();
+            ViewBag.Usuarios = new SelectList(usuarios, "Id", "Nombre");
+
+            var tecnicos = obtenerTecnicos();
+            ViewBag.Tecnicos = new SelectList(tecnicos, "Id", "Nombre");
+
+            var estados = obtenerEstados();
+            ViewBag.Estados = new SelectList(estados, "Id", "NombreEstado");
+
+            var categorias = obtenerCategorias();
+            ViewBag.Categorias = new SelectList(categorias, "Id", "Nombre");
+
+            // === Paginación simple ===
+            int totalRegistros = incidentes.Count();
+            int totalPaginas = (int)Math.Ceiling((double)totalRegistros / numreg);
+            int omitir = numreg * (page - 1);
+
+            ViewBag.totalPaginas = totalPaginas;
+            ViewBag.page = page;
+            ViewBag.numreg = numreg;
+
+            var resultado = incidentes.Skip(omitir).Take(numreg);
+
+            return View(resultado);
         }
-
-        // ----------------------
-        // Nuevos métodos privados (pegarlos aquí dentro del mismo region)
-        // ----------------------
-
-        /// <summary>
-        /// Llama al API para obtener la lista de Incidente (modelo completo) filtrada por técnico.
-        /// </summary>
-        private List<Incidente> obtenerIncidentesPorTecnico(int tecnicoId)
-        {
-            var lista = new List<Incidente>();
-            try
-            {
-                using (var clienteHTTP = new HttpClient())
-                {
-                    clienteHTTP.BaseAddress = new Uri(_mbmaConfig["Services:URL"]);
-
-                    // intentamos ambas formas de ruta por compatibilidad
-                    var rutas = new[]
-                    {
-                $"incidentes/tecnico/{tecnicoId}",
-                $"api/incidentes/tecnico/{tecnicoId}"
-            };
-
-                    HttpResponseMessage mensaje = null;
-                    string data = "";
-
-                    foreach (var ruta in rutas)
-                    {
-                        mensaje = clienteHTTP.GetAsync(ruta).Result;
-                        data = mensaje.Content.ReadAsStringAsync().Result ?? "";
-                        // guardamos el primer intento (útil para debug)
-                        TempData["MisIncidentes_Status"] = $"{ruta} -> {(int)mensaje.StatusCode} {mensaje.ReasonPhrase}";
-                        TempData["MisIncidentes_RawJsonPreview"] = data.Length > 1000 ? data.Substring(0, 1000) + "..." : data;
-
-                        // si 200 OK o 204 No Content, lo procesamos
-                        if (mensaje.IsSuccessStatusCode || mensaje.StatusCode == System.Net.HttpStatusCode.NoContent)
-                            break;
-                    }
-
-                    // si la respuesta fue exitosa y el body parece JSON, intentar deserializar a List<Incidente>
-                    if (mensaje != null && mensaje.IsSuccessStatusCode && !string.IsNullOrWhiteSpace(TempData["MisIncidentes_RawJsonPreview"] as string))
-                    {
-                        try
-                        {
-                            // primero intentar deserializar directo a List<Incidente>
-                            lista = JsonConvert.DeserializeObject<List<Incidente>>(data) ?? new List<Incidente>();
-
-                            // si vino un objeto contenedor en lugar de array, intentar recuperar propiedad que sea array
-                            if (lista.Count == 0)
-                            {
-                                var root = JToken.Parse(string.IsNullOrWhiteSpace(data) ? "{}" : data);
-                                if (root.Type == JTokenType.Object)
-                                {
-                                    var obj = (JObject)root;
-                                    var candidate = obj.Properties()
-                                                       .Select(p => p.Value)
-                                                       .FirstOrDefault(v => v != null && v.Type == JTokenType.Array);
-                                    if (candidate != null)
-                                    {
-                                        lista = candidate.ToObject<List<Incidente>>() ?? new List<Incidente>();
-                                    }
                                 }
                             }
                         }
@@ -301,69 +262,73 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             return lista;
         }
 
-        /// <summary>
-        /// Mapea un Incidente (completo) a IncidenteListado (la vista de lista).
-        /// Si tu modelo Incidente tiene Codigo_Ticket, cámbialo aquí por inc.Codigo_Ticket.
-        /// </summary>
-        private IncidenteListado MapToListado(Incidente inc)
+        public IActionResult ListadoIncidente(int page = 1, int numreg = 10, int usuario = 0, int tecnico = 0, int estado = 0, int categoria = 0)
         {
-            if (inc == null) return new IncidenteListado();
+            var incidentes = obtenerIncidentes(); // trae lista completa
 
-            return new IncidenteListado
-            {
-                // Si tienes la propiedad Codigo_Ticket en Incidente, utiliza inc.Codigo_Ticket; si no, usa Id.
-                Codigo_Ticket = /*inc.Codigo_Ticket*/ inc.Id,
-                Titulo_Incidente = inc.TituloIncidente ?? string.Empty,
-                Usuario_Reporta = inc.UsuarioReporta?.Nombre ?? string.Empty,
-                Estado = inc.EstadoIncidente?.NombreEstado ?? string.Empty,
-                Tecnico_Asignado = inc.UsuarioTecnico?.Nombre ?? string.Empty
-            };
-        }
+            // === Filtros por ID ===
+            if (usuario > 0)
+                incidentes = incidentes.Where(i => i.Id_Usuario == usuario).ToList();
+            if (tecnico > 0)
+                incidentes = incidentes.Where(i => i.Id_Tecnico == tecnico).ToList();
+            if (estado > 0)
+                incidentes = incidentes.Where(i => i.Id_Estado == estado).ToList();
+            if (categoria > 0)
+                incidentes = incidentes.Where(i => i.Id_Categoria == categoria).ToList();
 
-        #endregion
+            // === Combos ===
+            var usuarios = obtenerUsuarios();
+            usuarios.Insert(0, new Usuario { Id = 0, Nombre = "--SELECCIONE--" });
+            ViewBag.Usuarios = new SelectList(usuarios, "Id", "Nombre", usuario);
 
-        public IActionResult Index(int page = 1, int idEstadoIncidente = 0, int numreg = 15)
-        {
-            var listado = obtenerIncidente();
+            var tecnicos = obtenerTecnicos();
+            tecnicos.Insert(0, new Tecnico { Id = 0, Nombre = "--SELECCIONE--" });
+            ViewBag.Tecnicos = new SelectList(tecnicos, "Id", "Nombre", tecnico);
 
-            if (idEstadoIncidente > 0)
-                listado = listado.Where(c => c.EstadoIncidente != null && c.EstadoIncidente.Id == idEstadoIncidente).ToList();
+            var estados = obtenerEstados();
+            estados.Insert(0, new EstadoIncidente { Id = 0, NombreEstado = "--SELECCIONE--" });
+            ViewBag.Estados = new SelectList(estados, "Id", "NombreEstado", estado);
 
-            var lstEstadoInc = obtenerEstadosIncidente();
-            lstEstadoInc.Insert(0, new EstadoIncidente() { Id = 0, NombreEstado = "--SELECCIONE--" });
+            var categorias = obtenerCategorias();
+            categorias.Insert(0, new Categoria { Id = 0, Nombre = "--SELECCIONE--" });
+            ViewBag.Categorias = new SelectList(categorias, "Id", "Nombre", categoria);
 
-            int totalRegistros = listado.Count();
-            int registrosPorPaginas = numreg;
+            // Guardar valores seleccionados (para paginación)
+            ViewBag.usuarioSeleccionado = usuario;
+            ViewBag.tecnicoSeleccionado = tecnico;
+            ViewBag.estadoSeleccionado = estado;
+            ViewBag.categoriaSeleccionado = categoria;
 
-            int totalPaginas = (int)Math.Ceiling((double)totalRegistros / registrosPorPaginas);
-            int omitir = registrosPorPaginas * (page - 1);
+            // === Paginación ===
+            int totalRegistros = incidentes.Count();
+            int totalPaginas = (int)Math.Ceiling((double)totalRegistros / numreg);
+            int omitir = numreg * (page - 1);
 
             // VIEWBAG
             ViewBag.totalPaginas = totalPaginas;
-            ViewBag.estadoIncidente = new SelectList(lstEstadoInc, "Id", "NombreEstado", idEstadoIncidente);
+            ViewBag.page = page;
+            ViewBag.numreg = numreg;
 
-            ViewBag.registroSeleccionado = numreg;
-            ViewBag.EstadoIncidenteSeleccionado = idEstadoIncidente;
+            var resultado = incidentes.Skip(omitir).Take(numreg);
 
-            return View(listado.Skip(omitir).Take(registrosPorPaginas));
+            return View(resultado);
         }
 
+
+        // Crear
         public IActionResult Create()
         {
-            var lstEstadoInc = obtenerEstadosIncidente();
-            lstEstadoInc.Insert(0, new EstadoIncidente() { Id = 0, NombreEstado = "--SELECCIONE--" });
-            ViewBag.estadoIncidente = new SelectList(lstEstadoInc, "Id", "NombreEstado");
-
-            return View(new Incidente());
+            return View(new Incidente()); // modelo vacío
         }
 
         [HttpPost]
         public IActionResult Create(Incidente incidente)
         {
-            Incidente nuevoID = registrarIncidente(incidente);
-            return RedirectToAction("Details", new { id = nuevoID.Id });
+            var nuevo = registrarIncidente(incidente);
+            return RedirectToAction("MantenerIncidente");
         }
 
+        // Editar
         public IActionResult Edit(int id)
         {
             var incidente = obtenerPorId(id);
@@ -377,52 +342,30 @@ namespace SistemaGestionIncidentesWebApp.Controllers
         [HttpPost]
         public IActionResult Edit(Incidente incidente)
         {
-            actualizarIncidente(incidente);
-            return RedirectToAction("Details", new { id = incidente.Id });
+            var actualizado = actualizarIncidente(incidente);
+            return RedirectToAction("MantenerIncidente");
         }
 
-        public IActionResult Details(int id)
-        {
-            var mbmaProducto = obtenerPorId(id);
-            return View(mbmaProducto);
-        }
-
+        // Eliminar
         public IActionResult Delete(int id)
         {
-            var mbmaProducto = obtenerPorId(id);
-            return View(mbmaProducto);
+            var incidente = obtenerPorId(id);
+            return View(incidente);
         }
 
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            eliminarProducto(id);
-            return RedirectToAction("Index");
+            var eliminado = eliminarIncidente(id);
+            return RedirectToAction("MantenerIncidente");
         }
-
-        // Reemplazado: MisIncidentes ahora usa el mapeo Incidente -> IncidenteListado
-        public IActionResult MisIncidentes()
-        {
-            var tecnicoId = HttpContext.Session.GetInt32("UsuarioId");
-            if (tecnicoId == null)
-                return RedirectToAction("Login", "Usuarios"); // no está logueado
-
-            // obtener la lista de Incidente (modelo completo) del API filtrada por técnico (o fallback)
-            var incidentes = obtenerIncidentesPorTecnico(tecnicoId.Value);
-
-            // diagnóstico opcional si viene vacío
-            if (incidentes == null || incidentes.Count == 0)
-            {
-                // TempData["MisIncidentes_*"] ya contiene info para debug desde obtenerIncidentesPorTecnico
-                return View("MisIncidentes", new List<IncidenteListado>());
-            }
 
             // mapear a IncidenteListado (lo que espera la vista)
             var listado = incidentes.Select(i => MapToListado(i)).ToList();
 
             return View("MisIncidentes", listado);
         }
-
+      
         [HttpGet]
         public IActionResult DebugSession()
         {

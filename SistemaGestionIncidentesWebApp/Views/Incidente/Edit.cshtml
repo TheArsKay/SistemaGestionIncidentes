@@ -11,7 +11,7 @@
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Editar incidente #@Model.Id</h5>
         <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@Model.Id">Cancelar</a>
-    </div>
+            </div>
 
     <div class="card-body">
         @* El formulario POST invoca la acción Edit(Incidente incidente) de tu controlador *@
@@ -59,6 +59,10 @@
             </div>
         </form>
     </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
