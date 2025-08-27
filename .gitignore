@@ -1,28 +1,30 @@
-﻿# ===== Visual Studio =====
+﻿# Visual Studio
 .vs/
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
 
-# ===== Build outputs =====
-bin/
-obj/
-Debug/
-Release/
+# Build Folders
+[Bb]in/
+[Oo]bj/
 
-# ===== Archivos de configuración locales =====
-*.db
-*.log
-*.cache
-*.json.cache
+# Rider
+.idea/
 
-# ===== Compilados =====
-*.dll
-*.exe
-*.pdb
+# Visual Studio Code
+.vscode/
 
-# >>> EXCEPCIÓN: librería necesaria para reportes (DinkToPdf)
-!libwkhtmltox.dll
+# NuGet
+*.nupkg
+project.lock.json
+packages/
 
-# ===== Otros =====
-[Tt]humbs.db
-[Dd]esktop.ini
+# coverage
+*.coverage
+coverage/
+TestResults/
+
+# Local secrets
+appsettings.*.json
+*.Local
