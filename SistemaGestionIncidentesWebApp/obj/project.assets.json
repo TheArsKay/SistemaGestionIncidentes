@@ -6503,11 +6503,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Yheremy Menacho\\source\\repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
+      "projectUniqueName": "C:\\Users\\Yheremy Menacho\\source\\repos\\TheArsKay\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
       "projectName": "SistemaGestionIncidentesWebApp",
-      "projectPath": "C:\\Users\\Yheremy Menacho\\source\\repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
+      "projectPath": "C:\\Users\\Yheremy Menacho\\source\\repos\\TheArsKay\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
       "packagesPath": "C:\\Users\\Yheremy Menacho\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Yheremy Menacho\\source\\repos\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\obj\\",
+      "outputPath": "C:\\Users\\Yheremy Menacho\\source\\repos\\TheArsKay\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

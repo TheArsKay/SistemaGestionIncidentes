@@ -86,5 +86,12 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             // Opcional: comprobar status
             return RedirectToAction("Index");
         }
+        // Acción de diagnóstico: comprueba que el controller responde.
+        [HttpGet]
+        public IActionResult Ping()
+        {
+            return Content("Ping OK - " + nameof(Controller) + " - " + HttpContext.Request.Path);
+        }
+
     }
 }

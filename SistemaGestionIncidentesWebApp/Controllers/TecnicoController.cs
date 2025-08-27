@@ -15,6 +15,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             _httpFactory = httpFactory;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var client = _httpFactory.CreateClient("Api");
@@ -26,28 +27,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             return View(lista);
         }
 
-        public IActionResult Crear()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Crear(Tecnico model)
-        {
-            if (!ModelState.IsValid) return View(model);
-
-            var client = _httpFactory.CreateClient("Api");
-            var content = new StringContent(JsonSerializer.Serialize(model), System.Text.Encoding.UTF8, "application/json");
-            var resp = await client.PostAsync("tecnico/registrar", content);
-
-            if (!resp.IsSuccessStatusCode)
-            {
-                ModelState.AddModelError("", "Error al registrar técnico");
-                return View(model);
-            }
-
-            return RedirectToAction("Index");
-        }
+       
 
         public async Task<IActionResult> Editar(int id)
         {
@@ -85,5 +65,13 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             var resp = await client.DeleteAsync($"tecnico/eliminar/{id}");
             return RedirectToAction("Index");
         }
+
+        // Acción de diagnóstico: comprueba que el controller responde.
+        [HttpGet]
+        public IActionResult Ping()
+        {
+            return Content("Ping OK - " + nameof(Controller) + " - " + HttpContext.Request.Path);
+        }
+
     }
 }

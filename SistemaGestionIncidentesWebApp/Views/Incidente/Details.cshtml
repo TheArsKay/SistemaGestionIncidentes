@@ -1,0 +1,58 @@
+﻿@model SistemaGestionIncidentesWebApp.Models.Incidente
+
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = "Detalle de incidente";
+}
+
+<link rel="stylesheet" href="~/css/incidentes.css" />
+
+<div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Detalle incidente #@Model.Id</h5>
+        <div>
+            @{
+                var rol = Context.Session.GetString("UsuarioRol") ?? "";
+            }
+            @if (rol.Equals("Tecnico", StringComparison.OrdinalIgnoreCase) || rol.Equals("Técnico", StringComparison.OrdinalIgnoreCase))
+            {
+                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+            }
+            <a class="btn btn-sm btn-outline-secondary" asp-action="MisIncidentes">Volver al listado</a>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Código</dt>
+            <dd class="col-sm-9">@Model.Id</dd>
+
+            <dt class="col-sm-3">Título</dt>
+            <dd class="col-sm-9">@((Model.TituloIncidente ?? "-"))</dd>
+
+            <dt class="col-sm-3">Usuario que reporta</dt>
+            <dd class="col-sm-9">@((Model.UsuarioReporta?.Nombre) ?? "-")</dd>
+
+            <dt class="col-sm-3">Categoría</dt>
+            <dd class="col-sm-9">@((Model.Categoria?.Nombre) ?? "-")</dd>
+
+            <dt class="col-sm-3">Estado</dt>
+            <dd class="col-sm-9">@((Model.EstadoIncidente?.NombreEstado) ?? "-")</dd>
+
+            <dt class="col-sm-3">Técnico asignado</dt>
+            <dd class="col-sm-9">@((Model.UsuarioTecnico?.Nombre) ?? "-")</dd>
+
+            <dt class="col-sm-3">Descripción</dt>
+            <dd class="col-sm-9"><pre class="mb-0">@((Model.DescripcionIncidente) ?? "-")</pre></dd>
+
+            <dt class="col-sm-3">Solución</dt>
+            <dd class="col-sm-9">@((Model.SolucionIncidente) ?? "-")</dd>
+
+            <dt class="col-sm-3">Fecha creación</dt>
+            <dd class="col-sm-9">@Model.FechaCreacion.ToString("g")</dd>
+
+            <dt class="col-sm-3">Última modificación</dt>
+            <dd class="col-sm-9">@((Model.FechaModificacion?.ToString("g")) ?? "-")</dd>
+        </dl>
+    </div>
+</div>

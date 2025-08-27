@@ -53,18 +53,18 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             switch (rol)
             {
                 case "Operador":
-                    opciones.Add(("📋 Listado de Incidentes", "Incidentes", "Index"));
-                    opciones.Add(("➕ Registrar Incidente", "Incidentes", "Create"));
+                    opciones.Add(("📋 Listado de Incidentes", "Incidente", "Index"));
+                    opciones.Add(("➕ Registrar Incidente", "Incidente", "Create"));
                     break;
 
                 case "Supervisor":
-                    opciones.Add(("📊 Gestión de Incidentes", "Incidentes", "Index"));
+                    opciones.Add(("📊 Gestión de Incidentes", "Incidente", "Index"));
                     opciones.Add(("📈 Reportes", "Reportes", "Index")); // vista futura
                     break;
 
                 case "Técnico":
-                    opciones.Add(("🛠 Incidentes Asignados", "Incidentes", "Asignados")); // vista futura
-                    opciones.Add(("✏️ Actualizar Estado", "Incidentes", "Actualizar"));  // vista futura
+                    opciones.Add(("🛠 Incidentes Asignados", "Incidente", "MisIncidentes")); // vista futura
+                    opciones.Add(("✏️ Actualizar Estado", "Incidente", "Actualizar"));  // vista futura
                     break;
             }
 
@@ -85,6 +85,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
 
             return View();
         }
+
 
     }
 }

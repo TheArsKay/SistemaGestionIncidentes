@@ -1,0 +1,78 @@
+﻿@model SistemaGestionIncidentesWebApp.Models.Incidente
+
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = "Editar incidente";
+}
+
+<link rel="stylesheet" href="~/css/incidentes.css" />
+
+<div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Editar incidente #@Model.Id</h5>
+        <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@Model.Id">Cancelar</a>
+    </div>
+
+    <div class="card-body">
+        @* El formulario POST invoca la acción Edit(Incidente incidente) de tu controlador *@
+        <form asp-action="Edit" method="post">
+            @Html.AntiForgeryToken()
+
+            @* Id (oculto) *@
+            <input type="hidden" asp-for="Id" />
+            @* dentro del form, por ejemplo justo después de: <input type="hidden" asp-for="Id" /> *@
+            <input type="hidden" asp-for="DescripcionIncidente" />
+
+
+            <div class="mb-3">
+                <label class="form-label">Título</label>
+                <input class="form-control" asp-for="TituloIncidente" readonly />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Usuario que reporta</label>
+                <input class="form-control" value="@Model.UsuarioReporta?.Nombre" readonly />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Categoría</label>
+                <input class="form-control" value="@Model.Categoria?.Nombre" readonly />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Estado</label>
+                @* Usamos tag-helper para renderizar las opciones y seleccionar automáticamente *@
+                <select class="form-select" asp-for="EstadoIncidente.Id" asp-items="ViewBag.estadoIncidente"></select>
+
+                @* Para compatibilidad con APIs que esperan un int "idEstadoIncidente", incluimos también este campo oculto que será actualizado por JS al enviar si es necesario. *@
+                <input type="hidden" id="idEstadoIncidente" name="idEstadoIncidente" value="@(Model.EstadoIncidente?.Id ?? 0)" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Solución</label>
+                <textarea class="form-control" asp-for="SolucionIncidente" rows="5"></textarea>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                <a class="btn btn-outline-secondary" asp-action="Details" asp-route-id="@Model.Id">Volver</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Al cambiar el select actualizamos el campo hidden idEstadoIncidente
+        (function () {
+            var sel = document.querySelector('select[name="EstadoIncidente.Id"]');
+            var hidden = document.getElementById('idEstadoIncidente');
+            if (!sel || !hidden) return;
+            sel.addEventListener('change', function () {
+                hidden.value = sel.value || 0;
+            });
+            // asegurar que al cargar esté sincronizado
+            hidden.value = sel.value || hidden.value || 0;
+        })();
+    </script>
+}

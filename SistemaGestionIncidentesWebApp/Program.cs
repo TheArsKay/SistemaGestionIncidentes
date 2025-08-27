@@ -1,9 +1,15 @@
-var builder = WebApplication.CreateBuilder(args);
+﻿var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSession();
+builder.Services.AddDistributedMemoryCache(); // ✅ Necesario para sesiones
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 // HttpClient para consumir la API
 builder.Services.AddHttpClient("Api", client =>
@@ -25,7 +31,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession();
+app.UseSession(); // ✅ debe ir antes de UseAuthorization
 
 app.UseAuthorization();
 
