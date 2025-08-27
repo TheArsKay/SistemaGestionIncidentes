@@ -22,7 +22,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             using (var http = new HttpClient())
             {
                 http.BaseAddress = new Uri(_config["Services:URL"]);
-                var msg = http.GetAsync("Incidentes/listar").Result;
+                var msg = http.GetAsync("incidentes/listarResumen").Result;
 
                 if (!msg.IsSuccessStatusCode)
                 {
@@ -49,6 +49,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
 
             // Configurar opciones de menú según rol
             var opciones = new List<(string Texto, string Controller, string Action)>();
+
 
             switch (rol)
             {

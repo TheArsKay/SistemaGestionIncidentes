@@ -1,9 +1,24 @@
+using DinkToPdf;
+using DinkToPdf.Contracts;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddSession();
+//  Necesario para que Session funcione
+builder.Services.AddDistributedMemoryCache();
+
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // tiempo de vida de sesión
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+// Agregar conversor PDF
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 var app = builder.Build();
 
@@ -26,6 +41,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Usuarios}/{action=Login}/{id?}");
 
 app.Run();

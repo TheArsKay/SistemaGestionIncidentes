@@ -1,5 +1,28 @@
+# ===== Visual Studio =====
 .vs/
+*.user
+*.suo
+
+# ===== Build outputs =====
 bin/
 obj/
-*.user
+Debug/
+Release/
+
+# ===== Archivos de configuración locales =====
 *.db
+*.log
+*.cache
+*.json.cache
+
+# ===== Compilados =====
+*.dll
+*.exe
+*.pdb
+
+# >>> EXCEPCIÓN: librería necesaria para reportes (DinkToPdf)
+!libwkhtmltox.dll
+
+# ===== Otros =====
+[Tt]humbs.db
+[Dd]esktop.ini

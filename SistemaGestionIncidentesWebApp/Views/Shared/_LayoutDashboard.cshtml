@@ -8,20 +8,21 @@
 
     // Siempre la opción de Inicio primero
     opciones.Add(("Inicio", "Dashboard", "Index"));
+ 
 
     if (rol == "Operador")
     {
-        opciones.Add(("Listado de Incidentes", "Incidentes", "Index"));
-        opciones.Add(("Registrar Incidente", "Incidentes", "Create"));
+        opciones.Add(("Listado de Incidentes", "Incidente", "ListadoIncidente"));
+        opciones.Add(("Registrar Incidente", "Incidente", "Create"));
     }
     else if (rol == "Supervisor")
     {
-        opciones.Add(("Mantener Incidente", "Incidentes", "Edit"));
-        opciones.Add(("Reportes", "Incidente", "Reportes"));
+        opciones.Add(("Mantener Incidente", "Incidente", "MantenerIncidente"));
+        opciones.Add(("Reportes", "Reportes", "Index"));
     }
     else if (rol == "Técnico")
     {
-        opciones.Add(("Mis Incidentes", "Incidentes", "MisIncidentes"));
+        opciones.Add(("Mis Incidentes", "Incidente", "MisIncidentes"));
     }
 
 
@@ -86,5 +87,7 @@
             document.querySelector(".sidebar").classList.toggle("collapsed");
         });
     </script>
+    @RenderSection("Scripts", required: false)
+
 </body>
 </html>

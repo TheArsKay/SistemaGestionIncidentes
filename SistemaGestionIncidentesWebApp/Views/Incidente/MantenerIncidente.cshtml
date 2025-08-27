@@ -1,0 +1,84 @@
+﻿@model IEnumerable<SistemaGestionIncidentesWebApp.Models.Incidente>
+
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = "Mantener Incidentes";
+}
+
+<div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Incidentes Registrados</h5>
+        <a class="btn btn-primary btn-sm" asp-controller="Incidentes" asp-action="Create">
+            + Nuevo Incidente
+        </a>
+    </div>
+
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover table-striped mb-0 align-middle">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Solución</th>
+                        <th>Usuario</th>
+                        <th>Categoría</th>
+                        <th>Estado</th>
+                        <th>Técnico</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Titulo_Incidente</td>
+                                <td style="max-width:250px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"
+                                    title="@item.Descripcion_Incidente">
+                                    @item.Descripcion_Incidente
+                                </td>
+                                <td style="max-width:250px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"
+                                    title="@item.Solucion_Incidente">
+                                    @item.Solucion_Incidente
+                                </td>
+                                <td>@(((SelectList)ViewBag.Usuarios).FirstOrDefault(u => u.Value == item.Id_Usuario.ToString())?.Text)</td>
+                                <td>@(((SelectList)ViewBag.Categorias).FirstOrDefault(c => c.Value == item.Id_Categoria.ToString())?.Text)</td>
+                                <td>@(((SelectList)ViewBag.Estados).FirstOrDefault(e => e.Value == item.Id_Estado.ToString())?.Text)</td>
+                                <td>@(((SelectList)ViewBag.Tecnicos).FirstOrDefault(t => t.Value == item.Id_Tecnico.ToString())?.Text)</td>
+                                <td class="text-center">
+                                    @Html.ActionLink("Editar", "Edit", new { id = item.Id }, new { @class = "btn btn-warning btn-sm" }) |
+                                    @Html.ActionLink("Detalle", "Details", new { id = item.Id }, new { @class = "btn btn-info btn-sm" }) |
+                                    @Html.ActionLink("Eliminar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger btn-sm" })
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="9" class="text-center text-muted p-3">
+                                No se encontraron incidentes registrados.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- PAGINACIÓN -->
+<div class="pagination pagination-sm d-flex justify-content-center mt-3">
+    @for (int x = 1; x <= ViewBag.totalPaginas; x++)
+    {
+        <a class="page-link mx-1"
+           asp-action="MantenerIncidente"
+           asp-route-page="@x"
+           asp-route-numreg="@ViewBag.numreg">@x</a>
+    }
+</div>

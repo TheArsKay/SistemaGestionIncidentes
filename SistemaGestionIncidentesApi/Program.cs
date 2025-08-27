@@ -1,3 +1,4 @@
+
 using SistemaGestionIncidentesApi.Data;
 using SistemaGestionIncidentesApi.Data.Contrato;
 
@@ -10,9 +11,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//INYECTAR DEPENDENCIAS
+// INYECTAR DEPENDENCIAS
+builder.Services.AddScoped<IEstadoIncidente, EstadoIncidenteRepositorio>();
+builder.Services.AddScoped<Iincidente, IncidenteRepositorio>();
 builder.Services.AddScoped<IUsuario, UsuarioRepositorio>();
-builder.Services.AddScoped<IIndicente, IncidenteRepositorio>();
 
 var app = builder.Build();
 
