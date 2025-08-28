@@ -1,0 +1,88 @@
+﻿@model IEnumerable<SistemaGestionIncidentesWebApp.Models.Incidente>
+
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = "Listado de Incidentes";
+}
+
+<h2>Listado de Incidentes</h2>
+
+
+<form asp-action="ListadoIncidente" method="get">
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <label>Usuario</label>
+            @Html.DropDownList("usuario", (SelectList)ViewBag.Usuarios, new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            <label>Técnico</label>
+            @Html.DropDownList("tecnico", (SelectList)ViewBag.Tecnicos, new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            <label>Estado</label>
+            @Html.DropDownList("estado", (SelectList)ViewBag.Estados, new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            <label>Categoría</label>
+            @Html.DropDownList("categoria", (SelectList)ViewBag.Categorias, new { @class = "form-control" })
+        </div>
+
+
+        <div class="col-md-2">
+            <label>Registros por página</label>
+            <select name="numreg" class="form-select">
+                <option value="2" selected="@(ViewBag.numreg == 2)">2</option>
+                <option value="5" selected="@(ViewBag.numreg == 5)">5</option>
+                <option value="10" selected="@(ViewBag.numreg == 10)">10</option>
+            </select>
+        </div>
+
+  
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </div>
+    </div>
+</form>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>@Html.DisplayNameFor(model => model.TituloIncidente)</th>
+            <th>Usuario</th>
+            <th>Técnico</th>
+            <th>Estado</th>
+            <th>Categoría</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.TituloIncidente</td>
+                <td>@(((SelectList)ViewBag.Usuarios).FirstOrDefault(u => u.Value == item.UsuarioReporta.ToString())?.Text)</td>
+                <td>@(((SelectList)ViewBag.Tecnicos).FirstOrDefault(t => t.Value == item.UsuarioTecnico.ToString())?.Text)</td>
+                <td>@(((SelectList)ViewBag.Estados).FirstOrDefault(e => e.Value == item.EstadoIncidente.ToString())?.Text)</td>
+                <td>@(((SelectList)ViewBag.Categorias).FirstOrDefault(c => c.Value == item.Categoria.ToString())?.Text)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- PAGINACIÓN -->
+<div class="pagination pagination-sm d-flex justify-content-center">
+    @for (int x = 1; x <= ViewBag.totalPaginas; x++)
+    {
+        <a class="page-link"
+           asp-action="ListadoIncidente"
+           asp-route-page="@x"
+           asp-route-numreg="@ViewBag.numreg"
+           asp-route-usuario="@ViewBag.usuarioSeleccionado"
+           asp-route-tecnico="@ViewBag.tecnicoSeleccionado"
+           asp-route-estado="@ViewBag.estadoSeleccionado"
+           asp-route-categoria="@ViewBag.categoriaSeleccionado">@x</a>
+    }
+</div>
+

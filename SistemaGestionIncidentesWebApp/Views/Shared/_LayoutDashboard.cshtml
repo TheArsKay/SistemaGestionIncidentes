@@ -13,19 +13,20 @@
     opciones.Add(("Tecnico", "Tecnico", "Index"));
     opciones.Add(("Estados Incidente", "EstadoIncidente", "Index"));
 
+
     if (rol == "Operador")
     {
-        opciones.Add(("Listado de Incidentes", "Incidentes", "Index"));
-        opciones.Add(("Registrar Incidente", "Incidentes", "Create"));
+        opciones.Add(("Listado de Incidentes", "Incidente", "Index"));
+        opciones.Add(("Registrar Incidente", "Incidente", "Create"));
     }
     else if (rol == "Supervisor")
     {
-        opciones.Add(("Mantener Incidente", "Incidentes", "Edit"));
+        opciones.Add(("Mantener Incidente", "Incidente", "Edit"));
         opciones.Add(("Reportes", "Incidente", "Reportes"));
     }
     else if (rol == "Técnico")
     {
-        opciones.Add(("Mis Incidentes", "Incidentes", "MisIncidentes"));
+        opciones.Add(("Mis Incidentes", "Incidente", "MisIncidentes"));
     }
 
 

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<SistemaGestionIncidentesWebApp.Models.IncidenteListado>
+@{
+    ViewData["Title"] = "Mis Incidentes";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<h2 class="mb-3">🛠 Mis incidentes asignados</h2>
+
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info">No tienes incidentes asignados.</div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Título</th>
+                <th>Usuario</th>
+                <th>Estado</th>
+                <th>Técnico Asignado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Codigo_Ticket</td>
+                    <td>@item.Titulo_Incidente</td>
+                    <td>@item.Usuario_Reporta</td>
+                    <td>@(string.IsNullOrEmpty(item.Estado) ? "-" : item.Estado)</td>
+                    <td>@(string.IsNullOrEmpty(item.Tecnico_Asignado) ? "-" : item.Tecnico_Asignado)</td>
+                    <td class="text-nowrap">
+                        <a asp-controller="Incidente" asp-action="Details" asp-route-id="@item.Codigo_Ticket" class="btn btn-sm btn-outline-secondary">Detalles</a>
+                        <a asp-controller="Incidente" asp-action="Edit" asp-route-id="@item.Codigo_Ticket" class="btn btn-sm btn-primary">Editar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<div>
+    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary">Volver al Dashboard</a>
+<div/>

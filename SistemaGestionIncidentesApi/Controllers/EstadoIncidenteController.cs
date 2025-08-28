@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using SistemaGestionIncidentesApi.Data.Contrato;
 using SistemaGestionIncidentesApi.Models;
 
-namespace FinancieraAPI.Controllers
+namespace SistemaGestionIncidentesApi.Controllers
 {
-    // api/Incidente
+ 
     [Route("api/estados-incidente")]
     [ApiController]
     public class EstadoIncidenteController : ControllerBase

@@ -3,7 +3,7 @@ using SistemaGestionIncidentesApi.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
-namespace FinancieraAPI.Data
+namespace SistemaGestionIncidentesApi.Data
 {
     public class EstadoIncidenteRepositorio : IEstadoIncidente
     {
@@ -15,6 +15,7 @@ namespace FinancieraAPI.Data
             _config = config;
             cadenaConexion = _config["ConnectionStrings:DB"];
         }
+
 
         public EstadoIncidente Actualizar(EstadoIncidente estadoIncidente)
         {
@@ -45,7 +46,7 @@ namespace FinancieraAPI.Data
                 mbmaConexion.Open();
                 using (var command = new SqlCommand("EliminarEstadoIncidente", mbmaConexion))
                 {
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@id_incidente", id);
                     exito = command.ExecuteNonQuery() > 0;
                 }
@@ -61,7 +62,7 @@ namespace FinancieraAPI.Data
                 conexion.Open();
                 using (var comando = new SqlCommand("ListarEstadoIncidente", conexion))
                 {
-                    comando.CommandType = System.Data.CommandType.StoredProcedure;
+                    comando.CommandType = CommandType.StoredProcedure;
                     using (var reader = comando.ExecuteReader())
                     {
                         while (reader.Read())
@@ -83,11 +84,11 @@ namespace FinancieraAPI.Data
                 conexion.Open();
                 using (var comando = new SqlCommand("ObtenerEstadoIncidentePorID", conexion))
                 {
-                    comando.CommandType = System.Data.CommandType.StoredProcedure;
+                    comando.CommandType = CommandType.StoredProcedure;
                     comando.Parameters.AddWithValue("@ID", id);
                     using (var lector = comando.ExecuteReader())
                     {
-                        if(lector != null && lector.HasRows)
+                        if (lector != null && lector.HasRows)
                         {
                             lector.Read();
                             EstadoIncidente = ConvertirReaderEnObjeto(lector);
@@ -108,7 +109,7 @@ namespace FinancieraAPI.Data
                 conexion.Open();
                 using (var comando = new SqlCommand("RegistrarEstadoIncidente", conexion))
                 {
-                    comando.CommandType = System.Data.CommandType.StoredProcedure;
+                    comando.CommandType = CommandType.StoredProcedure;
                     comando.Parameters.AddWithValue("@nombre_estado", estadoIncidente.NombreEstado);
                     comando.Parameters.AddWithValue("@estado", estadoIncidente.Estado);
                     nuevoID = Convert.ToInt32(comando.ExecuteScalar());
@@ -131,10 +132,11 @@ namespace FinancieraAPI.Data
                 Estado = reader.GetString(reader.GetOrdinal("estado")),
                 FechaCreacion = reader.GetDateTime(reader.GetOrdinal("fechaCreacion")),
                 FechaModificacion = reader.IsDBNull(reader.GetOrdinal("fechaModificacion"))
-                                    ? (DateTime?)null
+                                    ? null
                                     : reader.GetDateTime(reader.GetOrdinal("fechaModificacion"))
             };
         }
+
         #endregion
     }
 }
