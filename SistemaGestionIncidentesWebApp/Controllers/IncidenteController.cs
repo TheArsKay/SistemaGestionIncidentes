@@ -48,7 +48,39 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
             return lstEstadoIncidente;
         }
 
-    
+        private List<Usuario> obtenerUsuario()
+        {
+            var lstUsuario = new List<Usuario>();
+            using (var clienteHTTP = new HttpClient())
+            {
+                clienteHTTP.BaseAddress = new Uri(_mbmaConfig["Services:URL"]);
+
+                var mensaje = clienteHTTP.GetAsync("Usuarios").Result;
+
+                var data = mensaje.Content.ReadAsStringAsync().Result;
+
+                lstUsuario = JsonConvert.DeserializeObject<List<Usuario>>(data);
+            }
+            return lstUsuario;
+        }
+
+        private List<Categoria> obtenerCategoria()
+        {
+            var lstCategoria = new List<Categoria>();
+            using (var clienteHTTP = new HttpClient())
+            {
+                clienteHTTP.BaseAddress = new Uri(_mbmaConfig["Services:URL"]);
+
+                var mensaje = clienteHTTP.GetAsync("Categoria").Result;
+
+                var data = mensaje.Content.ReadAsStringAsync().Result;
+
+                lstCategoria = JsonConvert.DeserializeObject<List<Categoria>>(data);
+            }
+            return lstCategoria;
+        }
+
+
 
         private Incidente obtenerPorId(int id)
         {
@@ -95,7 +127,7 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
             return incidente;
         }
 
-        private bool eliminarProducto(int id)
+        private bool eliminarIncidente(int id)
         {
             using (var clienteHTTP = new HttpClient())
             {
@@ -144,13 +176,24 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
             lstEstadoInc.Insert(0, new EstadoIncidente() { Id = 0, NombreEstado = "--SELECCIONE--" });
             ViewBag.estadoIncidente = new SelectList(lstEstadoInc, "Id", "NombreEstado");
 
+            var lstUsuario = obtenerUsuario();
+            lstUsuario.Insert(0, new Usuario() { Id = 0, Nombre = "--SELECCIONE--" });
+            ViewBag.usuario = new SelectList(lstUsuario, "Id", "Nombre");
+
+            //var lstCategoria = obtenerCategoria();
+            //lstCategoria.Insert(0, new Categoria() { Id = 0, NombreCategoria = "--SELECCIONE--" });
+            //ViewBag.categoria = new SelectList(lstCategoria, "Id", "NombreCategoria");
+
+
             return View(new Incidente());
         }
 
         [HttpPost]
         public IActionResult Create(Incidente incidente)
         {
-     
+            incidente.Categoria.Id = 1;
+            incidente.UsuarioTecnico.Id = 1;
+
             Incidente nuevoID = registrarIncidente(incidente);
             return RedirectToAction("Details", new { id = nuevoID.Id });
         }
@@ -158,8 +201,20 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
         public IActionResult Edit(int id)
         {
             var incidente = obtenerPorId(id);
+
+
+
             var lstEstadoInc = obtenerEstadosIncidente();
             lstEstadoInc.Insert(0, new EstadoIncidente() { Id = 0, NombreEstado = "--SELECCIONE--" });
+            ViewBag.estadoIncidente = new SelectList(lstEstadoInc, "Id", "NombreEstado");
+
+            var lstUsuario = obtenerUsuario();
+            lstUsuario.Insert(0, new Usuario() { Id = 0, Nombre = "--SELECCIONE--" });
+            ViewBag.usuario = new SelectList(lstUsuario, "Id", "Nombre");
+
+            //var lstCategoria = obtenerCategoria();
+            //lstCategoria.Insert(0, new Categoria() { Id = 0, NombreCategoria = "--SELECCIONE--" });
+            //ViewBag.categoria = new SelectList(lstCategoria, "Id", "NombreCategoria");
 
             ViewBag.estadoIncidente = new SelectList(lstEstadoInc, "Id", "NombreEstado");
             return View(incidente);
@@ -175,6 +230,19 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
         public IActionResult Details(int id)
         {
             var mbmaProducto = obtenerPorId(id);
+
+            var lstEstadoInc = obtenerEstadosIncidente();
+            lstEstadoInc.Insert(0, new EstadoIncidente() { Id = 0, NombreEstado = "--SELECCIONE--" });
+            ViewBag.estadoIncidente = new SelectList(lstEstadoInc, "Id", "NombreEstado");
+
+            var lstUsuario = obtenerUsuario();
+            lstUsuario.Insert(0, new Usuario() { Id = 0, Nombre = "--SELECCIONE--" });
+            ViewBag.usuario = new SelectList(lstUsuario, "Id", "Nombre");
+
+            //var lstCategoria = obtenerCategoria();
+            //lstCategoria.Insert(0, new Categoria() { Id = 0, NombreCategoria = "--SELECCIONE--" });
+            //ViewBag.categoria = new SelectList(lstCategoria, "Id", "NombreCategoria");
+
             return View(mbmaProducto);
         }
 
@@ -187,7 +255,7 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            eliminarProducto(id);
+            eliminarIncidente(id);
             return RedirectToAction("index");
         }
 
