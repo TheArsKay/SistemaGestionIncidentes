@@ -66,7 +66,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                 try
                 {
                     lista = JsonConvert.DeserializeObject<List<Incidente>>(data) ?? new List<Incidente>();
-                }
+            }
                 catch
                 {
                     try
@@ -101,14 +101,14 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                                 if (fm != null && DateTime.TryParse(fm.ToString(), out var fmd)) inc.FechaModificacion = fmd;
 
                                 lista.Add(inc);
-                            }
+        }
                             catch
-                            {
+        {
                             }
                         }
                     }
                     catch
-                    {
+            {
                         lista = new List<Incidente>();
                     }
                 }
@@ -142,7 +142,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                     catch
                     {
                         return null; 
-                    }
+            }
 
                     var incidente = new Incidente();
                     incidente.Id = root.Value<int?>("id") ?? root.Value<int?>("Id") ?? 0;
@@ -188,7 +188,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                     if (usr != null)
                     {
                         incidente.UsuarioReporta = usr;
-                    }
+        }
                     else
                     {
 
@@ -198,7 +198,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                         if (!string.IsNullOrWhiteSpace(nombreUsr))
                             incidente.UsuarioReporta = new Usuario { Id = idUsuario, Nombre = nombreUsr };
                     }
-
+    
                     var techAsUsuario = usuarios.FirstOrDefault(u => u.Id == idTecnico);
                     if (techAsUsuario != null)
                     {
@@ -225,7 +225,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                     var cat = categorias.FirstOrDefault(c => c.Id == idCategoria);
                     if (cat != null) incidente.Categoria = cat;
                     else
-                    {
+        {
                         var nombreCat = root.SelectToken("categoria.nombre")?.ToString()
                                      ?? root.SelectToken("categoria")?.ToString();
                         if (!string.IsNullOrWhiteSpace(nombreCat))
@@ -236,17 +236,17 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                     var est = estados.FirstOrDefault(e => e.Id == idEstado);
                     if (est != null) incidente.EstadoIncidente = est;
                     else
-                    {
+            {
                         var nombreEst = root.SelectToken("estadoIncidente.nombreEstado")?.ToString()
                                       ?? root.SelectToken("estadoIncidente.nombre")?.ToString()
                                       ?? root.SelectToken("nombreEstado")?.ToString()
                                       ?? root.SelectToken("estado")?.ToString();
                         if (!string.IsNullOrWhiteSpace(nombreEst))
                             incidente.EstadoIncidente = new EstadoIncidente { Id = idEstado, NombreEstado = nombreEst };
-                    }
+            }
 
-                    return incidente;
-                }
+            return incidente;
+        }
             }
             catch (Exception ex)
             {
@@ -286,7 +286,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                     if (v == null) continue;
                     if (v is int iv) return iv;
                     if (int.TryParse(v.ToString(), out var parsed)) return parsed;
-                }
+            }
                 return 0;
             }
 
@@ -346,7 +346,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             }
             return lista;
         }
-
+                
         private List<Tecnico> obtenerTecnicos()
         {
             var lista = new List<Tecnico>();
@@ -400,13 +400,15 @@ namespace SistemaGestionIncidentesWebApp.Controllers
         }
 
         [HttpGet]
-       
+
         public IActionResult Edit(int id)
         {
             var incidente = obtenerPorId(id);
             if (incidente == null) return NotFound();
 
-        
+            if (idEstadoIncidente > 0)
+                listado = listado.Where(c => c.EstadoIncidente.Id == idEstadoIncidente).ToList();
+
             var lstEstadoInc = obtenerEstadosIncidente();
             lstEstadoInc.Insert(0, new EstadoIncidente() { Id = 0, NombreEstado = "--SELECCIONE--" });
             ViewBag.Estados = new SelectList(lstEstadoInc, "Id", "NombreEstado", incidente.EstadoIncidente?.Id ?? incidente.GetType().GetProperty("idEstadoIncidente")?.GetValue(incidente));
@@ -478,7 +480,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                     if (incidente.EstadoIncidente != null)
                     {
                         incidente.EstadoIncidente.Id = idEstadoIncidente;
-                    }
+        }
                     else
                     {
                         var propEstadoObj = incidente.GetType().GetProperty("estadoIncidente") ?? incidente.GetType().GetProperty("EstadoIncidente");
@@ -498,15 +500,15 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             }
 
             try
-            {
+        {
                 var actualizado = actualizarIncidente(incidente);
                 TempData["EditSuccess"] = "Incidente actualizado correctamente.";
                 return RedirectToAction("Details", new { id = Id });
             }
             catch (Exception ex)
             {
-                var lstEstadoInc = obtenerEstadosIncidente();
-                lstEstadoInc.Insert(0, new EstadoIncidente() { Id = 0, NombreEstado = "--SELECCIONE--" });
+            var lstEstadoInc = obtenerEstadosIncidente();
+            lstEstadoInc.Insert(0, new EstadoIncidente() { Id = 0, NombreEstado = "--SELECCIONE--" });
                 ViewBag.Estados = new SelectList(lstEstadoInc, "Id", "NombreEstado", idEstadoIncidente);
 
                 var lstCategorias = obtenerCategorias();
@@ -524,7 +526,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                 TempData["EditError"] = "No se pudo actualizar: " + ex.Message;
                 ViewBag.NombreTecnico = incidente.UsuarioTecnico?.Nombre ?? (incidente.GetType().GetProperty("usuarioTecnico")?.GetValue(incidente)?.ToString() ?? "-");
                 return View(incidente);
-            }
+        }
 
         }
 
@@ -541,7 +543,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
             string usuario = i.UsuarioReporta?.Nombre ?? "-";
             string estado = i.EstadoIncidente?.NombreEstado ?? "-";
             string tecnico = i.UsuarioTecnico?.Nombre ?? "-";
-
+     
             return new IncidenteListado
             {
                 Codigo_Ticket = i.Id,
@@ -839,14 +841,14 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                         var n = t["nombre"] ?? t["Nombre"] ?? t["nombreTecnico"];
                         if (n != null && n.Type == JTokenType.String) return n.ToString();
                     }
-                }
+        }
 
                 var alt = token.SelectToken("usuarioReporta.nombre") ?? token.SelectToken("usuario_reporta.nombre") ?? token.SelectToken("usuarioReporta");
                 if (alt != null && alt.Type == JTokenType.String) return alt.ToString();
 
                 return null;
-            }
-        }
+    }
+}
 
 
         [HttpGet]

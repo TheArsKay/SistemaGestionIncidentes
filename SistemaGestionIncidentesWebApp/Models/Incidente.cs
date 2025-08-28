@@ -7,6 +7,7 @@ namespace SistemaGestionIncidentesWebApp.Models
     {
         public int Id { get; set; }
 
+
         [Display(Name = "Titulo")]
         public string TituloIncidente { get; set; }
 
