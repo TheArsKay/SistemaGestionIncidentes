@@ -2,77 +2,74 @@
 
 @{
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-    ViewData["Title"] = "Detalles del Incidente";
+    ViewData["Title"] = "Incidentes";
 }
 
-<h2 class="mb-3">Detalles del incidente</h2>
-
-<div class="card">
-    <div class="card-body">
-        <dl class="row">
-            <dt class="col-sm-3">Código</dt>
-            <dd class="col-sm-9">@Model?.Id</dd>
-
-            <dt class="col-sm-3">Estado</dt>
-            <dd class="col-sm-9">
-                @(Model?.EstadoIncidente?.NombreEstado ?? (Model?.GetType().GetProperty("estadoIncidente_nombre")?.GetValue(Model)?.ToString() ?? "-"))
-            </dd>
-
-            <dt class="col-sm-3">Título</dt>
-            <dd class="col-sm-9">@(!string.IsNullOrWhiteSpace(Model?.TituloIncidente) ? Model.TituloIncidente : "-")</dd>
-
-            <dt class="col-sm-3">Usuario que reporta</dt>
-            <dd class="col-sm-9">
-                @(
-                                Model?.UsuarioReporta?.Nombre
-                                ?? Model?.GetType().GetProperty("usuarioReporta_nombre")?.GetValue(Model)?.ToString()
-                                ?? "-"
-                                )
-            </dd>
-
-            <dt class="col-sm-3">Técnico asignado</dt>
-            <dd class="col-sm-9">
-                @(
-                                Model?.UsuarioTecnico?.Nombre
-                                ?? Model?.GetType().GetProperty("usuarioTecnico_nombre")?.GetValue(Model)?.ToString()
-                                ?? "-"
-                                )
-            </dd>
-
-            <dt class="col-sm-3">Categoría</dt>
-            <dd class="col-sm-9">
-                @(
-                                Model?.Categoria?.Nombre
-                                ?? Model?.GetType().GetProperty("categoria_nombre")?.GetValue(Model)?.ToString()
-                                ?? "-"
-                                )
-            </dd>
-
-            <dt class="col-sm-3">Fecha creación</dt>
-            <dd class="col-sm-9">
-                @(Model?.FechaCreacion.ToString("dd/MM/yyyy HH:mm") ?? "-")
-            </dd>
-
-            <dt class="col-sm-3">Última modificación</dt>
-            <dd class="col-sm-9">
-                @(
-                              
-                                (Model?.FechaModificacion != null)
-                                ? Model.FechaModificacion?.ToString("dd/MM/yyyy HH:mm")
-                                : "-"
-                                )
-            </dd>
-
-            <dt class="col-sm-3">Descripción</dt>
-            <dd class="col-sm-9">@(!string.IsNullOrWhiteSpace(Model?.DescripcionIncidente) ? Model.DescripcionIncidente : "-")</dd>
-
-            <dt class="col-sm-3">Solución</dt>
-            <dd class="col-sm-9">@(!string.IsNullOrWhiteSpace(Model?.SolucionIncidente) ? Model.SolucionIncidente : "-")</dd>
-        </dl>
-
-        <div class="mt-3">
-            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
-            <a asp-action="MisIncidentes" class="btn btn-secondary">Volver</a>
-        </div>
-    </div>
+<link rel="stylesheet" href="~/css/incidentes.css" />
+<div class="card-body p-0">
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TituloIncidente)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TituloIncidente)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DescripcionIncidente)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DescripcionIncidente)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SolucionIncidente)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SolucionIncidente)
+        </dd>
+        <dt class = "col-sm-2">
+           Usuario
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UsuarioReporta.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            Categoria
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Categoria.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            Estado de Incidente
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EstadoIncidente.NombreEstado)
+        </dd>
+        <dt class = "col-sm-2">
+            Técnico
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UsuarioTecnico.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaCreacion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaCreacion)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaModificacion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaModificacion)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="btn btn-primary" asp-action="Index">Regresar</a>
 </div>

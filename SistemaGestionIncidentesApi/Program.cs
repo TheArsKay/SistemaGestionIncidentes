@@ -1,3 +1,4 @@
+using FinancieraAPI.Data;
 using SistemaGestionIncidentesApi.Data;
 using SistemaGestionIncidentesApi.Data.Contrato;
 
@@ -26,7 +27,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // INYECTAR DEPENDENCIAS
-builder.Services.AddScoped<Iincidente, IncidenteRepositorio>();
+builder.Services.AddScoped<Iincidente, IncidenteRespositorio>();
 builder.Services.AddScoped<IEstadoIncidente, EstadoIncidenteRepositorio>();
 builder.Services.AddScoped<INotificacionRepositorio, NotificacionRepositorio>();
 builder.Services.AddScoped<IUsuario, UsuarioRepositorio>();
