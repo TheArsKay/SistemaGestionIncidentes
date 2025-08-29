@@ -3,16 +3,8 @@
   "WorkspaceRootPath": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{513468E6-EA9E-40FF-8FBD-613A9AE28B5A}|..\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj|d:\\5_ciclo_julio\\desarrollo de servicios web i\\proyecto\\sistemagestionincidentes\\sistemagestionincidenteswebapp\\controllers\\incidentecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{513468E6-EA9E-40FF-8FBD-613A9AE28B5A}|..\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj|d:\\5_ciclo_julio\\desarrollo de servicios web i\\proyecto\\sistemagestionincidentes\\sistemagestionincidenteswebapp\\views\\incidente\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{513468E6-EA9E-40FF-8FBD-613A9AE28B5A}|..\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj|d:\\5_ciclo_julio\\desarrollo de servicios web i\\proyecto\\sistemagestionincidentes\\sistemagestionincidenteswebapp\\views\\incidente\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{513468E6-EA9E-40FF-8FBD-613A9AE28B5A}|..\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj|d:\\5_ciclo_julio\\desarrollo de servicios web i\\proyecto\\sistemagestionincidentes\\sistemagestionincidenteswebapp\\models\\incidente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EFCFB886-3989-41A5-8BC0-6843FA9F41D6}|SistemaGestionIncidentesApi.csproj|d:\\5_ciclo_julio\\desarrollo de servicios web i\\proyecto\\sistemagestionincidentes\\sistemagestionincidentesapi\\data\\incidenterepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFCFB886-3989-41A5-8BC0-6843FA9F41D6}|SistemaGestionIncidentesApi.csproj|solutionrelative:data\\incidenterepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,58 +14,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\Views\\Incidente\\Edit.cshtml",
-              "RelativeDocumentMoniker": "..\\SistemaGestionIncidentesWebApp\\Views\\Incidente\\Edit.cshtml",
-              "ToolTip": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\Views\\Incidente\\Edit.cshtml",
-              "RelativeToolTip": "..\\SistemaGestionIncidentesWebApp\\Views\\Incidente\\Edit.cshtml",
-              "ViewState": "AgIAABcAAAAAAAAAAAAAACwAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-28T23:03:45.596Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Incidente.cs",
-              "DocumentMoniker": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\Models\\Incidente.cs",
-              "RelativeDocumentMoniker": "..\\SistemaGestionIncidentesWebApp\\Models\\Incidente.cs",
-              "ToolTip": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\Models\\Incidente.cs",
-              "RelativeToolTip": "..\\SistemaGestionIncidentesWebApp\\Models\\Incidente.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-28T20:29:03.825Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\Views\\Incidente\\Create.cshtml",
-              "RelativeDocumentMoniker": "..\\SistemaGestionIncidentesWebApp\\Views\\Incidente\\Create.cshtml",
-              "ToolTip": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\Views\\Incidente\\Create.cshtml",
-              "RelativeToolTip": "..\\SistemaGestionIncidentesWebApp\\Views\\Incidente\\Create.cshtml",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAACkAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-28T20:28:58.67Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "IncidenteController.cs",
-              "DocumentMoniker": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\Controllers\\IncidenteController.cs",
-              "RelativeDocumentMoniker": "..\\SistemaGestionIncidentesWebApp\\Controllers\\IncidenteController.cs",
-              "ToolTip": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesWebApp\\Controllers\\IncidenteController.cs",
-              "RelativeToolTip": "..\\SistemaGestionIncidentesWebApp\\Controllers\\IncidenteController.cs",
-              "ViewState": "AgIAAMUAAAAAAAAAAAAAAMgAAAAeAAAAAAAAAA==",
+              "Title": "IncidenteRepositorio.cs",
+              "DocumentMoniker": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\Data\\IncidenteRepositorio.cs",
+              "RelativeDocumentMoniker": "Data\\IncidenteRepositorio.cs",
+              "ToolTip": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\Data\\IncidenteRepositorio.cs",
+              "RelativeToolTip": "Data\\IncidenteRepositorio.cs",
+              "ViewState": "AgIAAKEAAAAAAAAAAAAewLQAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-28T20:28:03.391Z",
+              "WhenOpened": "2025-08-29T02:39:01.312Z",
               "EditorCaption": ""
             }
           ]

@@ -1,0 +1,30 @@
+﻿# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build Folders
+[Bb]in/
+[Oo]bj/
+
+# Rider
+.idea/
+
+# Visual Studio Code
+.vscode/
+
+# NuGet
+*.nupkg
+project.lock.json
+packages/
+
+# coverage
+*.coverage
+coverage/
+TestResults/
+
+# Local secrets
+appsettings.*.json
+*.Local

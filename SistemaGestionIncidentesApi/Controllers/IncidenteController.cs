@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SistemaGestionIncidentesApi.Data.Contrato;
 using SistemaGestionIncidentesApi.Models;
-using SistemaGestionIncidentesWebApp.Models;
 
 namespace FinancieraAPI.Controllers
 {

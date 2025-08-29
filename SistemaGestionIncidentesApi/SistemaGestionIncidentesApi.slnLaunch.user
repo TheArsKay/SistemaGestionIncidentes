@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Nuevo perfil",
+    "Projects": [
+      {
+        "Path": "SistemaGestionIncidentesApi.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "..\\SistemaGestionIncidentesWebApp\\SistemaGestionIncidentesWebApp.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

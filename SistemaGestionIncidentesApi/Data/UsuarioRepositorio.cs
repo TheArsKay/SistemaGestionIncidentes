@@ -21,7 +21,7 @@ namespace SistemaGestionIncidentesApi.Data
         {
             Usuario usuario = null;
 
-#pragma warning disable CS0618 // El tipo o el miembro están obsoletos
+#pragma warning disable CS0618 
             using (var conexion = new SqlConnection(cadenaConexion))
             {
                 conexion.Open();
@@ -34,7 +34,7 @@ namespace SistemaGestionIncidentesApi.Data
                     {
                         if (reader.Read())
                         {
-                            // Validar hash
+                        
                             string claveHash = reader.GetString(reader.GetOrdinal("clave"));
 
                             if (BCrypt.Net.BCrypt.Verify(clave, claveHash))
@@ -53,8 +53,8 @@ namespace SistemaGestionIncidentesApi.Data
                     }
                 }
             }
-#pragma warning restore CS0618 // El tipo o el miembro están obsoletos
-            return usuario; // null si las credenciales no coinciden
+#pragma warning restore CS0618 
+            return usuario; 
         }
 
         public List<Usuario> Listado()

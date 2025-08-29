@@ -148,6 +148,8 @@ namespace SistemaGestionIncidentesWebApp.Controllers
 
             HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre);
             HttpContext.Session.SetString("UsuarioRol", usuario.nombreRol);
+            HttpContext.Session.SetInt32("UsuarioId", usuario.Id ?? 0);
+
 
             return RedirectToAction("Index", "Dashboard");
         }

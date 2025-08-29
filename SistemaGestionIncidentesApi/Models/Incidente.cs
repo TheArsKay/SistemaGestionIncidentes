@@ -26,7 +26,7 @@ namespace SistemaGestionIncidentesApi.Models
  
         public EstadoIncidente? EstadoIncidente { get; set; }
 
-        public Usuario? UsuarioTecnico { get; set; }
+        public Tecnico? UsuarioTecnico { get; set; }
 
   
         public DateTime FechaCreacion { get; set; } = DateTime.Now;

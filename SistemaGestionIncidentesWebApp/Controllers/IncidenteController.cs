@@ -71,13 +71,29 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
             {
                 clienteHTTP.BaseAddress = new Uri(_mbmaConfig["Services:URL"]);
 
-                var mensaje = clienteHTTP.GetAsync("Categoria").Result;
+                var mensaje = clienteHTTP.GetAsync("Categoria/listar").Result;
 
                 var data = mensaje.Content.ReadAsStringAsync().Result;
 
                 lstCategoria = JsonConvert.DeserializeObject<List<Categoria>>(data);
             }
             return lstCategoria;
+        }
+
+        private List<Tecnico> obtenerTecnico()
+        {
+            var lstTecnico = new List<Tecnico>();
+            using (var clienteHTTP = new HttpClient())
+            {
+                clienteHTTP.BaseAddress = new Uri(_mbmaConfig["Services:URL"]);
+
+                var mensaje = clienteHTTP.GetAsync("Tecnico/listar").Result;
+
+                var data = mensaje.Content.ReadAsStringAsync().Result;
+
+                lstTecnico = JsonConvert.DeserializeObject<List<Tecnico>>(data);
+            }
+            return lstTecnico;
         }
 
 
@@ -122,7 +138,7 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
                 var mensaje = clienteHTTP.PutAsync("incidentes", contenido).Result;
                 var data = mensaje.Content.ReadAsStringAsync().Result;
                 incidente = JsonConvert.DeserializeObject<Incidente>(data);
-                
+
             }
             return incidente;
         }
@@ -180,9 +196,13 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
             lstUsuario.Insert(0, new Usuario() { Id = 0, Nombre = "--SELECCIONE--" });
             ViewBag.usuario = new SelectList(lstUsuario, "Id", "Nombre");
 
-            //var lstCategoria = obtenerCategoria();
-            //lstCategoria.Insert(0, new Categoria() { Id = 0, NombreCategoria = "--SELECCIONE--" });
-            //ViewBag.categoria = new SelectList(lstCategoria, "Id", "NombreCategoria");
+            var lstCategoria = obtenerCategoria();
+            lstCategoria.Insert(0, new Categoria() { Id = 0, Nombre = "--SELECCIONE--" });
+            ViewBag.categoria = new SelectList(lstCategoria, "Id", "Nombre");
+
+            var lstTecnico = obtenerTecnico();
+            lstTecnico.Insert(0, new Tecnico() { Id = 0, Nombre  = "--SELECCIONE--" });
+            ViewBag.tecnico = new SelectList(lstTecnico, "Id", "Nombre");
 
 
             return View(new Incidente());
@@ -191,8 +211,7 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
         [HttpPost]
         public IActionResult Create(Incidente incidente)
         {
-            incidente.Categoria.Id = 1;
-            incidente.UsuarioTecnico.Id = 1;
+          
 
             Incidente nuevoID = registrarIncidente(incidente);
             return RedirectToAction("Details", new { id = nuevoID.Id });
@@ -212,11 +231,14 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
             lstUsuario.Insert(0, new Usuario() { Id = 0, Nombre = "--SELECCIONE--" });
             ViewBag.usuario = new SelectList(lstUsuario, "Id", "Nombre");
 
-            //var lstCategoria = obtenerCategoria();
-            //lstCategoria.Insert(0, new Categoria() { Id = 0, NombreCategoria = "--SELECCIONE--" });
-            //ViewBag.categoria = new SelectList(lstCategoria, "Id", "NombreCategoria");
+            var lstCategoria = obtenerCategoria();
+            lstCategoria.Insert(0, new Categoria() { Id = 0, Nombre = "--SELECCIONE--" });
+            ViewBag.categoria = new SelectList(lstCategoria, "Id", "Nombre");
 
-            ViewBag.estadoIncidente = new SelectList(lstEstadoInc, "Id", "NombreEstado");
+            var lstTecnico = obtenerTecnico();
+            lstTecnico.Insert(0, new Tecnico() { Id = 0, Nombre = "--SELECCIONE--" });
+            ViewBag.tecnico = new SelectList(lstTecnico, "Id", "Nombre");
+
             return View(incidente);
         }
 
@@ -239,9 +261,13 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
             lstUsuario.Insert(0, new Usuario() { Id = 0, Nombre = "--SELECCIONE--" });
             ViewBag.usuario = new SelectList(lstUsuario, "Id", "Nombre");
 
-            //var lstCategoria = obtenerCategoria();
-            //lstCategoria.Insert(0, new Categoria() { Id = 0, NombreCategoria = "--SELECCIONE--" });
-            //ViewBag.categoria = new SelectList(lstCategoria, "Id", "NombreCategoria");
+            var lstCategoria = obtenerCategoria();
+            lstCategoria.Insert(0, new Categoria() { Id = 0, Nombre = "--SELECCIONE--" });
+            ViewBag.categoria = new SelectList(lstCategoria, "Id", "Nombre");
+
+            var lstTecnico = obtenerTecnico();
+            lstTecnico.Insert(0, new Tecnico() { Id = 0, Nombre = "--SELECCIONE--" });
+            ViewBag.tecnico = new SelectList(lstTecnico, "Id", "Nombre");
 
             return View(mbmaProducto);
         }
@@ -261,4 +287,3 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
 
     }
 }
-
