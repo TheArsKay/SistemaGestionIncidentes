@@ -1,0 +1,126 @@
+-- =============================================
+-- ELIMINAR BD SI EXISTE Y CREAR NUEVA
+-- =============================================
+USE master;
+GO
+IF DB_ID('GestionIncidentes') IS NOT NULL
+BEGIN
+    ALTER DATABASE GestionIncidentes SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE GestionIncidentes;
+END
+GO
+
+CREATE DATABASE GestionIncidentes;
+GO
+USE GestionIncidentes;
+GO
+
+-- =============================================
+-- TABLAS
+-- =============================================
+
+-- Tabla Rol
+CREATE TABLE Rol (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(50) NOT NULL,
+    descripcion TEXT NULL,
+    estado VARCHAR(1) NOT NULL DEFAULT 'A',
+    fecha_creacion DATETIME NOT NULL DEFAULT GETDATE(),
+    fecha_modificacion DATETIME NULL
+);
+
+-- Tabla Usuario
+CREATE TABLE Usuario (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(100) NOT NULL,
+    clave VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    rol_id INT NOT NULL FOREIGN KEY REFERENCES Rol(id),
+    estado VARCHAR(1) NOT NULL DEFAULT 'A',
+    fecha_creacion DATETIME NOT NULL DEFAULT GETDATE(),
+    fecha_modificacion DATETIME NULL
+);
+
+-- Tabla Categoria
+CREATE TABLE Categoria (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    nombre_categoria VARCHAR(100) NOT NULL,
+    estado VARCHAR(1) NOT NULL DEFAULT 'A',
+    fecha_creacion DATETIME NOT NULL DEFAULT GETDATE(),
+    fecha_modificacion DATETIME NULL
+);
+
+-- Tabla EstadoIncidente
+CREATE TABLE EstadoIncidente (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    nombre_estado VARCHAR(50) NOT NULL,
+    estado VARCHAR(1) NOT NULL DEFAULT 'A',
+    fecha_creacion DATETIME NOT NULL DEFAULT GETDATE(),
+    fecha_modificacion DATETIME NULL
+);
+-- Tabla Incidente
+
+CREATE TABLE Incidente (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    titulo_incidente VARCHAR(150) NOT NULL,
+    descripcion_incidente TEXT NULL,
+    solucion_incidente TEXT NULL,
+    id_usuario INT NOT NULL FOREIGN KEY REFERENCES Usuario(id), -- Usuario que reporta
+    id_categoria INT NOT NULL FOREIGN KEY REFERENCES Categoria(id),
+    id_estado INT NOT NULL FOREIGN KEY REFERENCES EstadoIncidente(id),
+    id_tecnico INT NULL FOREIGN KEY REFERENCES Usuario(id), -- Técnico asignado después
+    fecha_creacion DATETIME NOT NULL DEFAULT GETDATE(),
+    fecha_modificacion DATETIME NULL,
+    estado_registro CHAR(1) NOT NULL DEFAULT 'A'
+);
+
+-- =============================================
+-- INSERTS INICIALES
+-- =============================================
+-- Roles iniciales
+INSERT INTO Rol (nombre, descripcion)
+VALUES 
+('Usuario', 'Rol para docentes, estudiantes o administrativos que registran incidencias'),
+('Operador', 'Recibe, registra y hace seguimiento inicial de incidencias'),
+('Supervisor', 'Supervisa, asigna técnicos y valida cierres'),
+('Técnico', 'Atiende y resuelve las incidencias asignadas');
+
+-- Usuarios de ejemplo
+INSERT INTO Usuario (nombre, clave, email, rol_id)
+VALUES
+('Kevin Espinoza', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'kevin.espinoza@cibertec.edu.pe', 1),
+('María López', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'maria.lopez@cibertec.edu.pe', 2),
+('José Ramírez', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'jose.ramirez@cibertec.edu.pe',3),
+('Ana Torres', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'ana.torres@cibertec.edu.pe', 4),
+('Luis Fernández', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'luis.fernandez@cibertec.edu.pe', 1),
+('Carla Gutiérrez', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'carla.gutierrez@cibertec.edu.pe', 1),
+('Jorge Castillo', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'jorge.castillo@cibertec.edu.pe', 1),
+('Paola Medina', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'paola.medina@cibertec.edu.pe', 1),
+('Andrés Herrera', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'andres.herrera@cibertec.edu.pe', 1),
+('Valeria Díaz', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'valeria.diaz@cibertec.edu.pe', 1),
+('Ricardo Chávez', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'ricardo.chavez@cibertec.edu.pe', 1),
+('Daniela Rojas', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'daniela.rojas@cibertec.edu.pe', 1),
+('Fernando Vargas', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'fernando.vargas@cibertec.edu.pe', 1),
+('Gabriela Paredes', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'gabriela.paredes@cibertec.edu.pe', 1),
+('Diego Soto', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'diego.soto@cibertec.edu.pe', 1),
+('Lucía Cabrera', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'lucia.cabrera@cibertec.edu.pe', 1),
+('Manuel Salazar', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'manuel.salazar@cibertec.edu.pe', 1),
+('Rosa Aguilar', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'rosa.aguilar@cibertec.edu.pe', 1),
+('Héctor Campos', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'hector.campos@cibertec.edu.pe', 1),
+('Mónica Ruiz', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 'monica.ruiz@cibertec.edu.pe', 1);
+
+
+-- Categorías de ejemplo
+INSERT INTO Categoria (nombre_categoria)
+VALUES 
+('Hardware'),
+('Software'),
+('Redes');
+
+-- Estados de incidente
+INSERT INTO EstadoIncidente (nombre_estado)
+VALUES 
+('Pendiente'),
+('En Proceso'),
+('Resuelto'),
+('Cerrado');

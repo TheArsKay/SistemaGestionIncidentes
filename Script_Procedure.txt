@@ -1,0 +1,499 @@
+-----------------------------------------------------------
+
+--TECNICO
+
+------------------------------------------------
+
+CREATE OR ALTER PROC ActualizarIncidentePorTecnico
+    @idIncidente INT,
+    @idEstado INT,
+    @solucionIncidente TEXT = NULL
+AS
+BEGIN
+    UPDATE Incidente
+    SET 
+        id_estado = @idEstado,
+        solucion_incidente = @solucionIncidente,
+        fecha_modificacion = GETDATE()
+    WHERE id = @idIncidente
+      AND estado_registro = 'A';
+END;
+GO
+
+
+
+
+
+
+CREATE OR ALTER PROC ObtenerIncidentePorTecnico
+    @idTecnico INT,
+    @idIncidente INT
+AS
+BEGIN
+    SELECT 
+        i.id,
+        i.titulo_incidente,
+        i.descripcion_incidente,
+        i.solucion_incidente,
+        u.nombre AS usuarioNombre,
+        c.nombre_categoria AS categoriaNombre,
+        e.nombre_estado AS estadoNombre,
+        t.nombre AS tecnicoNombre
+    FROM Incidente i
+    INNER JOIN Usuario u ON i.id_usuario = u.id
+    INNER JOIN Categoria c ON i.id_categoria = c.id
+    INNER JOIN EstadoIncidente e ON i.id_estado = e.id
+    LEFT JOIN Usuario t ON i.id_tecnico = t.id
+    WHERE i.id_tecnico = @idTecnico
+      AND i.id = @idIncidente
+      AND i.estado_registro = 'A';
+END;
+
+
+GO
+
+CREATE OR ALTER PROC ListarIncidentesPorTecnico
+    @idTecnico INT
+AS
+BEGIN
+    SELECT 
+        i.id,
+        i.titulo_incidente,
+        i.descripcion_incidente,
+        i.solucion_incidente,
+        u.nombre AS UsuarioNombre,
+        c.nombre_categoria AS CategoriaNombre,
+        e.nombre_estado AS EstadoNombre,
+        t.nombre AS TecnicoNombre
+    FROM Incidente i
+    INNER JOIN Usuario u ON i.id_usuario = u.id
+    INNER JOIN Categoria c ON i.id_categoria = c.id
+    INNER JOIN EstadoIncidente e ON i.id_estado = e.id
+    LEFT JOIN Usuario t ON i.id_tecnico = t.id
+    WHERE i.id_tecnico = @idTecnico
+      AND i.estado_registro = 'A'
+    ORDER BY i.fecha_creacion DESC;
+END;
+GO
+
+
+
+CREATE OR ALTER PROC ListarTecnicos
+AS
+BEGIN
+    SELECT 
+        U.id,
+        U.nombre,
+        U.email,
+        U.rol_id,
+        R.nombre AS nombreRol
+    FROM Usuario U
+    INNER JOIN Rol R ON U.rol_id = R.id
+    WHERE U.rol_id = 4; 
+END;
+GO
+
+
+CREATE OR ALTER PROC RegistrarTecnico
+    @nombre VARCHAR(100),
+    @clave VARCHAR(255),
+    @correo VARCHAR(100),
+    @rol_id INT
+AS
+BEGIN
+    INSERT INTO Usuario (nombre, clave, email, rol_id)
+    VALUES (@nombre, @clave, @correo, @rol_id);
+
+    SELECT SCOPE_IDENTITY() AS NuevoTecnicoID;
+END;
+GO
+
+
+CREATE OR ALTER PROC ActualizarTecnico
+    @id INT,
+    @nombre VARCHAR(100),
+    @correo VARCHAR(100),
+    @estado VARCHAR(1)
+AS
+BEGIN 
+    UPDATE Usuario
+    SET nombre = @nombre,
+        email = @correo,
+        estado = @estado,
+        fecha_modificacion = GETDATE()
+    WHERE id = @id AND rol_id = 4;
+END;
+GO
+
+
+CREATE OR ALTER PROC EliminarTecnico
+    @id INT
+AS
+BEGIN
+    DELETE FROM Usuario
+    WHERE id = @id AND rol_id = 4;
+
+    SELECT @@ROWCOUNT AS FilasAfectadas;
+END;
+GO
+
+
+
+
+
+-----------------------------------------------------------
+
+--INCIDENTE
+
+------------------------------------------------
+
+
+
+-- =========================================================
+-- 1. Registrar incidente
+-- =========================================================
+CREATE OR ALTER PROC ListarIncidentes
+AS
+BEGIN
+    SELECT 
+        i.id AS codigo_ticket,
+        i.titulo_incidente,
+        u.nombre AS usuario_reporta,
+        e.nombre_estado AS estado,
+        ISNULL(t.nombre, 'Sin técnico') AS tecnico_asignado
+    FROM Incidente i
+    INNER JOIN Usuario u ON u.id = i.id_usuario
+    INNER JOIN EstadoIncidente e ON e.id = i.id_estado
+    LEFT JOIN Usuario t ON t.id = i.id_tecnico
+    ORDER BY i.fecha_creacion DESC;
+END;
+GO
+
+
+
+
+
+CREATE OR ALTER PROC RegistrarIncidente
+    @tituloIncidente VARCHAR(150),
+    @descripcionIncidente TEXT = NULL,
+    @solucionIncidente TEXT = NULL,
+    @idUsuario INT,
+    @idCategoria INT,
+    @idEstado INT,
+    @idTecnico INT = NULL
+AS
+BEGIN
+    INSERT INTO Incidente 
+        (titulo_incidente, descripcion_incidente, solucion_incidente, id_usuario, id_categoria, id_estado, id_tecnico, estado_registro)
+    VALUES 
+        (@tituloIncidente, @descripcionIncidente, @solucionIncidente, @idUsuario, @idCategoria, @idEstado, @idTecnico, 'A');
+
+    SELECT SCOPE_IDENTITY() AS NuevoIncidenteID;
+END;
+GO
+
+-- =========================================================
+-- 2. Actualizar incidente
+-- =========================================================
+CREATE OR ALTER PROC ActualizarIncidente
+    @idIncidente INT,
+    @tituloIncidente VARCHAR(150),
+    @descripcionIncidente TEXT = NULL,
+    @solucionIncidente TEXT = NULL,
+    @idUsuario INT,
+    @idCategoria INT,
+    @idEstado INT,
+    @idTecnico INT = NULL
+AS
+BEGIN
+    UPDATE Incidente
+    SET titulo_incidente     = @tituloIncidente,
+        descripcion_incidente = @descripcionIncidente,
+        solucion_incidente   = @solucionIncidente,
+        id_usuario           = @idUsuario,
+        id_categoria         = @idCategoria,
+        id_estado            = @idEstado,
+        id_tecnico           = @idTecnico,
+        fecha_modificacion   = GETDATE()
+    WHERE id = @idIncidente
+      AND estado_registro = 'A';
+END;
+GO
+
+-- =========================================================
+-- 3. Eliminar incidente (borrado lógico con estado_registro)
+-- =========================================================
+CREATE OR ALTER PROC EliminarIncidente
+    @id_incidente INT
+AS
+BEGIN
+    UPDATE Incidente
+    SET estado_registro   = 'I',
+        fecha_modificacion = GETDATE()
+    WHERE id = @id_incidente
+      AND estado_registro = 'A';
+END;
+GO
+
+-- =========================================================
+-- 4. Obtener incidente por ID
+-- =========================================================
+CREATE OR ALTER PROC ObtenerIncidentePorID
+    @ID INT
+AS
+BEGIN
+    SELECT 
+        i.id,
+        i.titulo_incidente AS tituloIncidente,
+        i.descripcion_incidente AS descripcionIncidente,
+        i.solucion_incidente AS solucionIncidente,
+        i.id_usuario AS idUsuario,
+        i.id_categoria AS idCategoria,
+        i.id_estado AS idEstadoIncidente,
+        i.id_tecnico AS idTecnico
+    FROM Incidente i
+    WHERE i.id = @ID
+      AND i.estado_registro = 'A';
+END;
+GO
+
+-- =========================================================
+-- 5. Listar incidente (detalle completo con IDs)
+-- =========================================================
+CREATE OR ALTER PROC ListarIncidente
+AS
+BEGIN
+    SELECT 
+        i.id,
+        i.titulo_incidente AS tituloIncidente,
+        i.descripcion_incidente AS descripcionIncidente,
+        i.solucion_incidente AS solucionIncidente,
+        i.id_usuario AS idUsuario,
+        i.id_categoria AS idCategoria,
+        i.id_estado AS idEstadoIncidente,
+        i.id_tecnico AS idTecnico
+    FROM Incidente i
+    WHERE i.estado_registro = 'A'
+    ORDER BY i.fecha_creacion DESC;
+END;
+GO
+
+
+
+----------------------------------------------------------
+
+--CATEGORIAS
+
+---------------------------------------------------
+
+CREATE OR ALTER PROC ListarCategorias
+AS
+BEGIN
+    SELECT 
+        id,
+        nombre_categoria,
+        estado
+    FROM Categoria;
+END;
+GO
+
+CREATE OR ALTER PROC RegistrarCategoria
+    @nombre_categoria VARCHAR(100)
+AS
+BEGIN
+    INSERT INTO Categoria (nombre_categoria)
+    VALUES (@nombre_categoria);
+
+    SELECT SCOPE_IDENTITY() AS NuevaCategoriaID;
+END;
+GO
+
+
+CREATE OR ALTER PROC ActualizarCategoria
+    @id INT,
+    @nombre_categoria VARCHAR(100),
+    @estado VARCHAR(1)
+AS
+BEGIN
+    UPDATE Categoria
+    SET nombre_categoria = @nombre_categoria,
+        estado = @estado,
+        fecha_modificacion = GETDATE()
+    WHERE id = @id;
+END;
+GO
+
+
+
+CREATE OR ALTER PROC EliminarCategoria
+    @id INT
+AS
+BEGIN
+    UPDATE Categoria
+    SET estado = 'I',
+        fecha_modificacion = GETDATE()
+    WHERE id = @id;
+END;
+GO
+
+
+
+----------------------------------------------------------
+
+--ESTADOINCIDENTE
+
+---------------------------------------------------
+
+-- =============================================
+-- PROCEDURES PARA ESTADOINCIDENTE
+-- =============================================
+
+-- Listar todos los estados
+-- Listar
+CREATE OR ALTER PROC ListarEstadoIncidente
+AS
+BEGIN
+    SELECT 
+        id,
+        nombre_estado AS nombreEstado,
+        estado,
+        fecha_creacion AS fechaCreacion,
+        fecha_modificacion AS fechaModificacion
+    FROM EstadoIncidente
+    WHERE estado = 'A';
+END;
+GO
+
+-- Obtener por ID
+CREATE OR ALTER PROC ObtenerEstadoIncidentePorID
+    @ID INT
+AS
+BEGIN
+    SELECT 
+        id,
+        nombre_estado AS nombreEstado,
+        estado,
+        fecha_creacion AS fechaCreacion,
+        fecha_modificacion AS fechaModificacion
+    FROM EstadoIncidente
+    WHERE id = @ID;
+END;
+GO
+
+-- Registrar
+CREATE OR ALTER PROC RegistrarEstadoIncidente
+    @nombre_estado VARCHAR(50),
+    @estado CHAR(1)
+AS
+BEGIN
+    INSERT INTO EstadoIncidente (nombre_estado, estado)
+    VALUES (@nombre_estado, @estado);
+
+    SELECT SCOPE_IDENTITY() AS NuevoID;
+END;
+GO
+
+-- Actualizar
+CREATE OR ALTER PROC ActualizarEstadoIncidente
+    @id INT,
+    @nombre_estado VARCHAR(50),
+    @estado CHAR(1)
+AS
+BEGIN
+    UPDATE EstadoIncidente
+    SET nombre_estado = @nombre_estado,
+        estado = @estado,
+        fecha_modificacion = GETDATE()
+    WHERE id = @id;
+END;
+GO
+
+-- Eliminar (lógico)
+CREATE OR ALTER PROC EliminarEstadoIncidente
+    @id_incidente INT
+AS
+BEGIN
+    UPDATE EstadoIncidente
+    SET estado = 'I',
+        fecha_modificacion = GETDATE()
+    WHERE id = @id_incidente;
+END;
+GO
+
+---------------------------------------------------------
+
+--USUARIOS
+
+------------------------------------------
+
+CREATE OR ALTER PROC ObtenerUsuarioPorID(
+@ID INT)
+AS
+SELECT 
+    U.id,
+    U.nombre,
+    U.clave,
+    U.email,
+    U.rol_id,
+    R.nombre AS nombreRol
+FROM Usuario U 
+INNER JOIN Rol R ON U.rol_id = R.id
+WHERE U.id = @ID
+GO
+
+---------------------------------------------------------
+CREATE OR ALTER PROC ListarUsuarios
+AS
+BEGIN
+SELECT 
+    U.id,
+    U.nombre,
+    U.clave,
+    U.email,
+    U.rol_id,
+    R.nombre AS nombreRol
+FROM Usuario U 
+INNER JOIN Rol R ON U.rol_id = R.id
+WHERE U.rol_id = 1;
+END;
+GO
+---------------------------------------------------------
+CREATE OR ALTER PROC RegistrarUsuario
+    @nombre VARCHAR(100),
+    @clave VARCHAR(255),
+    @correo VARCHAR(100),
+    @rol_id INT
+AS
+BEGIN
+    INSERT INTO Usuario (nombre, clave, email, rol_id)
+    VALUES (@nombre, @clave, @correo, @rol_id);
+
+    SELECT SCOPE_IDENTITY() AS NuevoUsuarioID;
+END;
+GO
+---------------------------------------------------------
+CREATE OR ALTER PROC ObtenerUsuarioPorEmail
+    @correo VARCHAR(100)
+AS
+BEGIN
+    SELECT 
+        u.id,
+        u.nombre,
+        u.email,
+        u.clave, -- Guardada en hash
+        u.rol_id,
+        r.nombre AS nombreRol
+    FROM Usuario u
+    INNER JOIN Rol r ON u.rol_id = r.id
+    WHERE u.email = @correo
+      AND u.estado = 'A';
+END;
+GO
+---------------------------------------------------------
+CREATE OR ALTER PROC ListarRoles
+AS
+BEGIN
+SELECT id, nombre FROM Rol;
+END;
+GO
+
