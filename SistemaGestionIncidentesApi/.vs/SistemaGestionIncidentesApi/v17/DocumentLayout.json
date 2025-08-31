@@ -1,12 +1,58 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\5_CICLO_JULIO\\desarrollo de servicios web I\\Proyecto\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\KEVIN MESAC\\Documents\\ServiciosWeb_workspace\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EFCFB886-3989-41A5-8BC0-6843FA9F41D6}|SistemaGestionIncidentesApi.csproj|c:\\users\\kevin mesac\\documents\\serviciosweb_workspace\\sistemagestionincidentes\\sistemagestionincidentesapi\\controllers\\incidentecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFCFB886-3989-41A5-8BC0-6843FA9F41D6}|SistemaGestionIncidentesApi.csproj|solutionrelative:controllers\\incidentecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EFCFB886-3989-41A5-8BC0-6843FA9F41D6}|SistemaGestionIncidentesApi.csproj|c:\\users\\kevin mesac\\documents\\serviciosweb_workspace\\sistemagestionincidentes\\sistemagestionincidentesapi\\controllers\\estadoincidentecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EFCFB886-3989-41A5-8BC0-6843FA9F41D6}|SistemaGestionIncidentesApi.csproj|solutionrelative:controllers\\estadoincidentecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IncidenteController.cs",
+              "DocumentMoniker": "C:\\Users\\KEVIN MESAC\\Documents\\ServiciosWeb_workspace\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\Controllers\\IncidenteController.cs",
+              "RelativeDocumentMoniker": "Controllers\\IncidenteController.cs",
+              "ToolTip": "C:\\Users\\KEVIN MESAC\\Documents\\ServiciosWeb_workspace\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\Controllers\\IncidenteController.cs",
+              "RelativeToolTip": "Controllers\\IncidenteController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-31T07:20:53.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EstadoIncidenteController.cs",
+              "DocumentMoniker": "C:\\Users\\KEVIN MESAC\\Documents\\ServiciosWeb_workspace\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\Controllers\\EstadoIncidenteController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EstadoIncidenteController.cs",
+              "ToolTip": "C:\\Users\\KEVIN MESAC\\Documents\\ServiciosWeb_workspace\\SistemaGestionIncidentes\\SistemaGestionIncidentesApi\\Controllers\\EstadoIncidenteController.cs",
+              "RelativeToolTip": "Controllers\\EstadoIncidenteController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-31T07:20:51.704Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
