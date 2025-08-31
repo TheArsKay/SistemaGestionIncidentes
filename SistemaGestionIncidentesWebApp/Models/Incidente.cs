@@ -12,7 +12,7 @@ namespace SistemaGestionIncidentesWebApp.Models
         public string? Solucion_Incidente { get; set; }
 
         // FK: estos se llenan en los combos
-        [Display(Name = "Usuario")]
+        [Display(Name = "Usuario que Reporta")]
         public int Id_Usuario { get; set; }
 
         [Display(Name = "Categoría")]
@@ -21,7 +21,7 @@ namespace SistemaGestionIncidentesWebApp.Models
         [Display(Name = "Estado")]
         public int Id_Estado { get; set; }
 
-        [Display(Name = "Técnico")]
+        [Display(Name = "Técnico Asignado")]
         public int? Id_Tecnico { get; set; }
     }
 }

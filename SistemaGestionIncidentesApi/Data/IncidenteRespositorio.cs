@@ -16,7 +16,7 @@ namespace SistemaGestionIncidentesApi.Data
             _config = config;
             cadenaConexion = _config["ConnectionStrings:DB"];
         }
-
+//se abre la conexion a la base de datos y se llama Procedim. Almacenados del crud
         public Incidente Actualizar(Incidente incidente)
         {
             using (var connection = new SqlConnection(cadenaConexion))

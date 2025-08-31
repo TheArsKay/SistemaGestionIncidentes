@@ -306,7 +306,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
 
             // ✅ Si todo está correcto, registramos y redirigimos
             var nuevo = registrarIncidente(incidente);
-            return RedirectToAction("ListadoIncidente");
+            return RedirectToAction("MantenerIncidente");
         }
 
 
@@ -332,16 +332,16 @@ namespace SistemaGestionIncidentesWebApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int Id, int idEstadoIncidente, string SolucionIncidente, string DescripcionIncidente, string TituloIncidente, int idUsuarioTecnico = 0, int idUsuarioReporta = 0, int idCategoria = 0)
+        public IActionResult Edit(int Id, int Id_Estado, string Solucion_Incidente, string Descripcion_Incidente, string Titulo_Incidente, int Id_Tecnico = 0, int Id_Usuario = 0, int Id_Categoria = 0)
         {
             // 1) Traer la versión actual para no perder campos que no se envían desde la UI
             var incidente = obtenerPorId(Id);
             if (incidente == null) return NotFound();
 
             // 2) Aplicar los cambios de la UI (mantener valores actuales si vienen vacíos)
-            incidente.Titulo_Incidente = string.IsNullOrWhiteSpace(TituloIncidente) ? incidente.Titulo_Incidente : TituloIncidente;
-            incidente.Descripcion_Incidente = string.IsNullOrWhiteSpace(DescripcionIncidente) ? incidente.Descripcion_Incidente : DescripcionIncidente;
-            incidente.Solucion_Incidente = SolucionIncidente; // puede ser null/empty (es opcional)
+            incidente.Titulo_Incidente = string.IsNullOrWhiteSpace(Titulo_Incidente) ? incidente.Titulo_Incidente : Titulo_Incidente;
+            incidente.Descripcion_Incidente = string.IsNullOrWhiteSpace(Descripcion_Incidente) ? incidente.Descripcion_Incidente : Descripcion_Incidente;
+            incidente.Solucion_Incidente = Solucion_Incidente; // puede ser null/empty (es opcional)
 
             // 3) Asegurar los ids (guardar en propiedades de id si existen)
             // Intentamos asignar varias variantes por compatibilidad
@@ -358,10 +358,10 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                 }
             }
 
-            if (idUsuarioTecnico > 0) TrySetIntProp(incidente, new[] { "idUsuarioTecnico", "IdUsuarioTecnico", "idTecnico", "IdTecnico" }, idUsuarioTecnico);
-            if (idUsuarioReporta > 0) TrySetIntProp(incidente, new[] { "idUsuarioReporta", "IdUsuarioReporta", "idUsuario", "IdUsuario" }, idUsuarioReporta);
-            if (idCategoria > 0) TrySetIntProp(incidente, new[] { "idCategoria", "IdCategoria" }, idCategoria);
-            if (idEstadoIncidente > 0) TrySetIntProp(incidente, new[] { "idEstadoIncidente", "IdEstadoIncidente", "idEstado", "IdEstado" }, idEstadoIncidente);
+            if (Id_Tecnico > 0) TrySetIntProp(incidente, new[] { "idUsuarioTecnico", "IdUsuarioTecnico", "idTecnico", "IdTecnico" }, Id_Tecnico);
+            if (Id_Usuario > 0) TrySetIntProp(incidente, new[] { "idUsuarioReporta", "IdUsuarioReporta", "idUsuario", "IdUsuario" }, Id_Usuario);
+            if (Id_Categoria > 0) TrySetIntProp(incidente, new[] { "idCategoria", "IdCategoria" }, Id_Categoria);
+            if (Id_Estado > 0) TrySetIntProp(incidente, new[] { "idEstadoIncidente", "IdEstadoIncidente", "idEstado", "IdEstado" }, Id_Estado);
 
             // 4) MUY IMPORTANTE: eliminar los objetos anidados antes de serializar para evitar validaciones del API
             try
@@ -392,7 +392,7 @@ namespace SistemaGestionIncidentesWebApp.Controllers
                 // recargar select de estados
                 var lstEstadoInc = obtenerEstados();
                 lstEstadoInc.Insert(0, new EstadoIncidente() { Id = 0, NombreEstado = "--SELECCIONE--" });
-                ViewBag.Estados = new SelectList(lstEstadoInc, "Id", "NombreEstado", idEstadoIncidente);
+                ViewBag.Estados = new SelectList(lstEstadoInc, "Id", "NombreEstado", Id_Estado);
 
                 // reconstruir campos visibles
                 ViewBag.NombreTecnico = incidente.GetType().GetProperty("UsuarioTecnico")?.GetValue(incidente) is Usuario u ? u.Nombre : (incidente.GetType().GetProperty("usuarioTecnico")?.GetValue(incidente)?.ToString() ?? "-");
