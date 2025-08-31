@@ -1,14 +1,13 @@
 ﻿@model SistemaGestionIncidentesWebApp.Models.Incidente
 
 @{
-    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = "Incidentes";
 }
+<div class="card shadow-sm">
 
-<h1>Deatlles de Incidente</h1>
-
-<div>
-    <h4>Incidente</h4>
-    <hr />
+    <div class="card-body p-0">
+        <h2 class="text-center">Detalle Incidente</h2>
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Id)
@@ -67,8 +66,10 @@
         </dd>
 
     </dl>
-</div>
+    <br />
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+            <a asp-action="MantenerIncidente" class="btn btn-secondary">Regresar</a>
+
+</div>
+    </div>
 </div>

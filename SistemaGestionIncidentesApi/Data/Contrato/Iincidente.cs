@@ -1,6 +1,6 @@
 ﻿using SistemaGestionIncidentesApi.Models;
 using SistemaGestionIncidentesApi.Models.DTOs;
-
+//Metodos del crud 
 namespace SistemaGestionIncidentesApi.Data.Contrato
 {
     public interface Iincidente

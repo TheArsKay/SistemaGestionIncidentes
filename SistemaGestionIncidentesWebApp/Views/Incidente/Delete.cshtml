@@ -1,14 +1,13 @@
 ﻿@model SistemaGestionIncidentesWebApp.Models.Incidente
 
 @{
-    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = "Incidentes";
 }
+<div class="card shadow-sm">
 
-<h1>Borrar Incidente</h1>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Incidente</h4>
+    <div class="card-body p-0">
+        <h2 class="text-center">Incidente</h2>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -61,8 +60,10 @@
         </dd>
     </dl>
     
+    <br />
     <form asp-action="Delete">
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+            <a asp-action="MantenerIncidente" class="btn btn-secondary">Regresar</a>
     </form>
+</div>
 </div>

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SistemaGestionIncidentesApi.Data;
 using SistemaGestionIncidentesApi.Data.Contrato;
 using SistemaGestionIncidentesApi.Models;
-
+//Probamos el crud mediante la URL.
 namespace FinancieraAPI.Controllers
 {
     // api/Incidente
