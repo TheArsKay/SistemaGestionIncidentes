@@ -1,0 +1,26 @@
+﻿/* Tarjetas del Dashboard */
+.card-dashboard {
+    border-radius: 15px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: #fff;
+}
+
+    .card-dashboard .card-body {
+        display: flex;
+        align-items: center;
+    }
+
+    .card-dashboard .icon {
+        font-size: 2.5rem;
+        opacity: 0.85;
+    }
+
+    .card-dashboard:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+.card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}

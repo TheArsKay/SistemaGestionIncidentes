@@ -1,0 +1,48 @@
+﻿/* Tarjeta del listado */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Encabezado */
+.card-header {
+    background: #343a40;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Tabla */
+.table thead th {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.table tbody td {
+    vertical-align: middle;
+}
+
+/* Badges de estados */
+.badge {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+    /* Colores personalizados para estados */
+    .badge.estado-pendiente {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .badge.estado-enproceso {
+        background-color: #0d6efd;
+        color: #fff;
+    }
+
+    .badge.estado-cerrado {
+        background-color: #198754;
+        color: #fff;
+    }

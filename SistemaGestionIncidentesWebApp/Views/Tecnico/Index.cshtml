@@ -1,0 +1,56 @@
+﻿@model IEnumerable<SistemaGestionIncidentesWebApp.Models.Tecnico>
+
+@{
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    ViewData["Title"] = "Gestión de Técnicos";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/inicio.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+}
+
+<div class="container-fluid mt-4">
+    <h2 class="mb-4 fw-bold text-dark">Gestión de Técnicos</h2>
+
+    <a asp-action="Create" class="btn btn-primary mb-3">Nuevo Técnico</a>
+
+    <table id="tablaTecnicos" class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var t in Model)
+            {
+                <tr>
+                    <td>@t.Id</td>
+                    <td>@t.Nombre</td>
+                    <td>@t.Correo</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@t.Id" class="btn btn-warning btn-sm">Editar</a>
+                        <form asp-action="Delete" asp-route-id="@t.Id" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tablaTecnicos').DataTable();
+        });
+    </script>
+}
+

@@ -1,0 +1,36 @@
+﻿@model IEnumerable<SistemaGestionIncidentesWebApp.Models.DTOs.IncidenteTecnicoDTO>
+
+@{
+    ViewData["Title"] = "Mis Incidentes";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<h2>Mis Incidentes Asignados</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Usuario</th>
+            <th>Categoría</th>
+            <th>Estado</th>
+            <th>Técnico</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TituloIncidente</td>
+                <td>@item.UsuarioNombre</td>
+                <td>@item.CategoriaNombre</td>
+                <td>@item.EstadoNombre</td>
+                <td>@item.TecnicoNombre</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
