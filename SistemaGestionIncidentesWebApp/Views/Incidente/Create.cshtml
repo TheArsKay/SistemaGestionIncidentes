@@ -29,7 +29,7 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="EstadoIncidente" class="control-label">Estados de Incidente</label>
+            <label asp-for="idEstadoIncidente" class="control-label">Estados de Incidente</label>
                 <select asp-for="idEstadoIncidente" asp-items="@ViewBag.estadoIncidente" class="form-select"></select>
                 <span asp-validation-for="idEstadoIncidente" class="text-danger"></span>
             </div>
@@ -62,8 +62,4 @@
 </div>
 
 
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
 

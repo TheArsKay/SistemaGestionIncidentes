@@ -1,5 +1,5 @@
 ﻿using SistemaGestionIncidentesApi.Models;
-
+//Mapeo de los metodos del crud//
 namespace SistemaGestionIncidentesApi.Data.Contrato
 {
     public interface Iincidente

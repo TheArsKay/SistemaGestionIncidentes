@@ -2,7 +2,7 @@
 using SistemaGestionIncidentesApi.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
-
+//ABRE LA CONEXION A LA BASE DE DATOS MEDIANTE LA LOGICA Y SE INVOCA A TODOS LOS PROCEDIMIENTO ALMACENADO DEL CRUD
 namespace FinancieraAPI.Data
 {
     public class IncidenteRespositorio : Iincidente

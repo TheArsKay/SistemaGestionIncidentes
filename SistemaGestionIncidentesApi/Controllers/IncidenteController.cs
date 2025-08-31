@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SistemaGestionIncidentesApi.Data.Contrato;
 using SistemaGestionIncidentesApi.Models;
-
+//PROBAMOS EL CRUD MEDIANTE EL URL YA SEA POR  POSTMAN Y EL SWAGER
 namespace FinancieraAPI.Controllers
 {
     // api/Incidente
@@ -55,5 +55,6 @@ namespace FinancieraAPI.Controllers
         {
             return Ok(await Task.Run(() => incidenteDB.Eliminar(id)));
         }
+
     }
 }

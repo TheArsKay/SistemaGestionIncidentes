@@ -15,7 +15,7 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
             _mbmaConfig = iConfig;
         }
 
-        #region . MÉTODOS PRIVADOS .
+        #region Helpers (consumo API)
 
         private List<Incidente> obtenerIncidente()
         {
@@ -156,6 +156,8 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
 
         #endregion
 
+        #region Metodos crud que generarán la vista
+
 
         public IActionResult Index(int page = 1, int idEstadoIncidente = 0, int numreg = 15)
         {
@@ -284,6 +286,6 @@ namespace DSW1_T2_MANTARI_ALVARADO_MERCEDES_WEB.Controllers
             eliminarIncidente(id);
             return RedirectToAction("index");
         }
-
+        #endregion
     }
 }
